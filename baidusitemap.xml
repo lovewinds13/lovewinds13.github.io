@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://lovewinds13.github.io/2022/11/21/mos-guan-san-ji-guan-yi-xie-chang-yong-de-ying-jian-she-ji-dian-lu-fen-xi/</loc>
-    <lastmod>2022-11-22</lastmod>
-  </url>
-  <url>
     <loc>https://lovewinds13.github.io/2022/11/21/shen-du-xue-xi-xi-lie-2-pytorch-tu-xiang-fen-lei-alexnet/</loc>
     <lastmod>2022-11-22</lastmod>
   </url>
   <url>
     <loc>https://lovewinds13.github.io/2022/11/21/shen-du-xue-xi-xi-lie-1-pytorch-tu-xiang-fen-lei-lenet/</loc>
+    <lastmod>2022-11-22</lastmod>
+  </url>
+  <url>
+    <loc>https://lovewinds13.github.io/2022/11/21/mos-guan-san-ji-guan-yi-xie-chang-yong-de-ying-jian-she-ji-dian-lu-fen-xi/</loc>
     <lastmod>2022-11-22</lastmod>
   </url>
 </urlset> 
