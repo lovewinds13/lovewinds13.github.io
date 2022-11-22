@@ -499,7 +499,7 @@
 <p><strong>整个工程已经上传个人的 github <a href="https://github.com/lovewinds13/QYQXDeepLearning" target="_blank" rel="noopener">https://github.com/lovewinds13/QYQXDeepLearning</a> ，下载即可直接测试，数据集文件因为比较大，已经删除了，按照下文教程下载即可。</strong></p>
 <hr>
 <h1 id="2-LeNet"><a href="#2-LeNet" class="headerlink" title="2. LeNet"></a>2. LeNet</h1><p>LeNet 可以说是第一个卷积神经网络，LeNet-5。LeNet-5 由Y. LeCun 在 1998 年发表的文章《Gradient-Based Learning Applied to Document Recognition 》中正式提出，应用于数字识别问题。LeNet 包含了卷积网络的基本组件，如下图：可以看到卷积层，池化层，全连接层。</p>
-<h2 id="2-1-网络结构"><a href="#2-1-网络结构" class="headerlink" title="2.1 网络结构"></a>2.1 网络结构</h2><p><img src="https://img-blog.csdnimg.cn/d1041f50467f478d98c99b8789cc1315.png#pic_center" alt="在这里插入图片描述"><br>LeNet-5 由 2 个卷积层，2 个池化层（下采样层），3 个全连接层组成。</p>
+<h2 id="2-1-网络结构"><a href="#2-1-网络结构" class="headerlink" title="2.1 网络结构"></a>2.1 网络结构</h2><p><img src="https://img-blog.csdnimg.cn/d1041f50467f478d98c99b8789cc1315.png#pic_center" alt><br>LeNet-5 由 2 个卷积层，2 个池化层（下采样层），3 个全连接层组成。</p>
 <table>
 <thead>
 <tr>
@@ -540,11 +540,11 @@
 <td align="center">输入 84 个节点，输出 10 个节点</td>
 </tr>
 </tbody></table>
-<p><strong>模型框图：</strong><br><img src="https://img-blog.csdnimg.cn/5a12fdd4933b4b5982a6bb929ecb847f.png#pic_center" alt="在这里插入图片描述"></p>
+<p><strong>模型框图：</strong><br><img src="https://img-blog.csdnimg.cn/5a12fdd4933b4b5982a6bb929ecb847f.png#pic_center" alt></p>
 <h1 id="3-demo-实现"><a href="#3-demo-实现" class="headerlink" title="3. demo 实现"></a>3. demo 实现</h1><p>针对 CIFAR10 数据集，进行图像识别。</p>
 <p>整个过程实现流程：</p>
-<p><img src="https://img-blog.csdnimg.cn/0af25342614b4a6cb46dc556c82ecf90.png#pic_center" alt="在这里插入图片描述"></p>
-<h2 id="3-1-demo-结构："><a href="#3-1-demo-结构：" class="headerlink" title="3.1 demo 结构："></a>3.1 demo 结构：</h2><p>demo 包含 model.py ，train.py，predict.py 三个文件。<br><img src="https://img-blog.csdnimg.cn/9fe6a97330c147479a6633f67d54d4bb.png#pic_center" alt="在这里插入图片描述"></p>
+<p><img src="https://img-blog.csdnimg.cn/0af25342614b4a6cb46dc556c82ecf90.png#pic_center" alt></p>
+<h2 id="3-1-demo-结构："><a href="#3-1-demo-结构：" class="headerlink" title="3.1 demo 结构："></a>3.1 demo 结构：</h2><p>demo 包含 model.py ，train.py，predict.py 三个文件。<br><img src="https://img-blog.csdnimg.cn/9fe6a97330c147479a6633f67d54d4bb.png#pic_center" alt></p>
 <h2 id="3-2-model-py"><a href="#3-2-model-py" class="headerlink" title="3.2 model.py"></a>3.2 model.py</h2><pre class="line-numbers language-python"><code class="language-python"><span class="token triple-quoted-string string">"""
 模型
 """</span>
@@ -596,11 +596,11 @@
 <span class="token comment" spellcheck="true"># modelx = LeNet()</span>
 <span class="token comment" spellcheck="true"># print(modelx)</span>
 <span class="token comment" spellcheck="true"># output = modelx(input1)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<h3 id="3-2-1-卷积后的图像尺寸"><a href="#3-2-1-卷积后的图像尺寸" class="headerlink" title="3.2.1 卷积后的图像尺寸"></a>3.2.1 卷积后的图像尺寸</h3><p>（1）正方形图像：输入大小 W X W，卷积核大小 F X F，步长 S，Padding 为 P，卷积之后输出大小为 N XN ，N 的计算如下：<br><img src="https://img-blog.csdnimg.cn/c5e58dbddbaa48c0ab06b80aef25a181.png#pic_center" alt="在这里插入图片描述"></p>
+<h3 id="3-2-1-卷积后的图像尺寸"><a href="#3-2-1-卷积后的图像尺寸" class="headerlink" title="3.2.1 卷积后的图像尺寸"></a>3.2.1 卷积后的图像尺寸</h3><p>（1）正方形图像：输入大小 W X W，卷积核大小 F X F，步长 S，Padding 为 P，卷积之后输出大小为 N XN ，N 的计算如下：<br><img src="https://img-blog.csdnimg.cn/c5e58dbddbaa48c0ab06b80aef25a181.png#pic_center" alt></p>
 <pre class="line-numbers language-python"><code class="language-python"> x <span class="token operator">=</span> F<span class="token punctuation">.</span>relu<span class="token punctuation">(</span>self<span class="token punctuation">.</span>conv1<span class="token punctuation">(</span>x<span class="token punctuation">)</span><span class="token punctuation">)</span>   <span class="token comment" spellcheck="true"># 输入: (3, 32, 32), 输出: (16, 28, 28)</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-<p>（2）矩形图像：输入大小 H X W，卷积核大小 F X F，步长 S，Padding 为 P，卷积之后输出大小计算如下：<br><img src="https://img-blog.csdnimg.cn/676adffad8f346cb8bf3510875fe02fa.png#pic_center" alt="在这里插入图片描述"></p>
+<p>（2）矩形图像：输入大小 H X W，卷积核大小 F X F，步长 S，Padding 为 P，卷积之后输出大小计算如下：<br><img src="https://img-blog.csdnimg.cn/676adffad8f346cb8bf3510875fe02fa.png#pic_center" alt></p>
 <h3 id="3-2-2-池化后的图像尺寸"><a href="#3-2-2-池化后的图像尺寸" class="headerlink" title="3.2.2 池化后的图像尺寸"></a>3.2.2 池化后的图像尺寸</h3><p>输入大小 H X W，卷积核尺寸 F X F，步长 S，池化之后输出大小计算如下：</p>
-<p><img src="https://img-blog.csdnimg.cn/b7fca7f06ffe4b5b82766e476231c417.png#pic_center" alt="在这里插入图片描述"></p>
+<p><img src="https://img-blog.csdnimg.cn/b7fca7f06ffe4b5b82766e476231c417.png#pic_center" alt></p>
 <pre class="line-numbers language-python"><code class="language-python">x <span class="token operator">=</span> self<span class="token punctuation">.</span>pool1<span class="token punctuation">(</span>x<span class="token punctuation">)</span>   <span class="token comment" spellcheck="true"># 输入: (16, 28, 28), 输出: (16, 14, 14)</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 <h3 id="3-2-3-Tensor-展平"><a href="#3-2-3-Tensor-展平" class="headerlink" title="3.2.3 Tensor 展平"></a>3.2.3 Tensor 展平</h3><p>经过前面一层处理，数据输出为三维 Tensor  (32, 5, 5)，使用 view() 方法来展平数据。</p>
 <pre class="line-numbers language-python"><code class="language-python">x <span class="token operator">=</span> x<span class="token punctuation">.</span>view<span class="token punctuation">(</span><span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">32</span><span class="token operator">*</span><span class="token number">5</span><span class="token operator">*</span><span class="token number">5</span><span class="token punctuation">)</span>  <span class="token comment" spellcheck="true"># 输出: (32*5*5)</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
@@ -619,7 +619,7 @@
     <span class="token punctuation">]</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
 <p>将数据转成张量，并做标准化处理。</p>
 <h3 id="3-3-3-导入数据集"><a href="#3-3-3-导入数据集" class="headerlink" title="3.3.3 导入数据集"></a>3.3.3 导入数据集</h3><p>数据集包括训练集和测试集，设置 download=True，自动从 Pytorch 网站下载数据集。下图为开始下载数据集。</p>
-<p><img src="https://img-blog.csdnimg.cn/aca9e053c8d3450fb31ca13c55aeef73.png#pic_center" alt="在这里插入图片描述"></p>
+<p><img src="https://img-blog.csdnimg.cn/aca9e053c8d3450fb31ca13c55aeef73.png#pic_center" alt></p>
 <h3 id="3-3-4-数据集测试"><a href="#3-3-4-数据集测试" class="headerlink" title="3.3.4 数据集测试"></a>3.3.4 数据集测试</h3><p>可通过下面的代码，查看数据集图片。</p>
 <pre class="line-numbers language-python"><code class="language-python"> <span class="token comment" spellcheck="true"># 定义的分类标签</span>
     class_labels <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token string">'plane'</span><span class="token punctuation">,</span> <span class="token string">'car'</span><span class="token punctuation">,</span> <span class="token string">'bird'</span><span class="token punctuation">,</span> <span class="token string">'cat'</span><span class="token punctuation">,</span> <span class="token string">'deer'</span><span class="token punctuation">,</span> <span class="token string">'dog'</span><span class="token punctuation">,</span> <span class="token string">'frog'</span><span class="token punctuation">,</span> <span class="token string">'horse'</span><span class="token punctuation">,</span> <span class="token string">'ship'</span><span class="token punctuation">,</span> <span class="token string">'truck'</span><span class="token punctuation">)</span>
@@ -704,7 +704,7 @@
 
     save_path <span class="token operator">=</span> <span class="token string">"./LeNet.pth"</span>
     torch<span class="token punctuation">.</span>save<span class="token punctuation">(</span>net<span class="token punctuation">.</span>state_dict<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span> save_path<span class="token punctuation">)</span> <span class="token comment" spellcheck="true"># 保存训练输出的模型文件</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<p>训练打印信息：<br><img src="https://img-blog.csdnimg.cn/7cc78c962c6540768dc63e3d5113b0c0.png#pic_center" alt="在这里插入图片描述">（2）<strong>GPU 训练代码：</strong><br>需要将训练设备指定为 GPU，且需要修改对应数据和标签。</p>
+<p>训练打印信息：<br><img src="https://img-blog.csdnimg.cn/7cc78c962c6540768dc63e3d5113b0c0.png#pic_center" alt>（2）<strong>GPU 训练代码：</strong><br>需要将训练设备指定为 GPU，且需要修改对应数据和标签。</p>
 <pre class="line-numbers language-python"><code class="language-python">net <span class="token operator">=</span> LeNet<span class="token punctuation">(</span><span class="token punctuation">)</span>   <span class="token comment" spellcheck="true"># 用于训练的网络模型</span>
     <span class="token comment" spellcheck="true"># 指定GPU or CPU 进行训练</span>
     net<span class="token punctuation">.</span>to<span class="token punctuation">(</span><span class="token string">"cuda"</span><span class="token punctuation">)</span>
@@ -743,7 +743,7 @@
     torch<span class="token punctuation">.</span>save<span class="token punctuation">(</span>net<span class="token punctuation">.</span>state_dict<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span> save_path<span class="token punctuation">)</span> <span class="token comment" spellcheck="true"># 保存训练输出的模型文件</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p>通过对比可发现，GPU 的速度快于 CPU。</p>
 <p><strong>注：</strong><br>本文采用 pycharm 开发，需要安装对应 CUDA，具体的版本需要查看自己电脑对应的 GPU 型号，然后下载 CUDA 安装。本文的信息如下：</p>
-<p><img src="https://img-blog.csdnimg.cn/0cd4efcd8e8c494dbaffd5f76a571aaa.png#pic_center" alt="在这里插入图片描述"></p>
+<p><img src="https://img-blog.csdnimg.cn/0cd4efcd8e8c494dbaffd5f76a571aaa.png#pic_center" alt></p>
 <h2 id="3-4-predict-py"><a href="#3-4-predict-py" class="headerlink" title="3.4. predict.py"></a>3.4. predict.py</h2><p>此文件为模型测试代码。</p>
 <pre class="line-numbers language-python"><code class="language-python"><span class="token triple-quoted-string string">""""
 测试
@@ -776,7 +776,7 @@
         predict <span class="token operator">=</span> torch<span class="token punctuation">.</span>max<span class="token punctuation">(</span>outputs<span class="token punctuation">,</span> dim<span class="token operator">=</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">.</span>numpy<span class="token punctuation">(</span><span class="token punctuation">)</span>
     <span class="token keyword">print</span><span class="token punctuation">(</span>f<span class="token string">"It is {data_class[int(predict)]}"</span><span class="token punctuation">)</span>
 <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<p>测试图片为：cat_test2.jpg<br><img src="https://img-blog.csdnimg.cn/5f13ce6f40cf42abab00680af42486f4.jpeg#pic_center" alt="在这里插入图片描述"><br>测试结果：<br><img src="https://img-blog.csdnimg.cn/cdff445c0dbd462e81f723c05f3ec8b1.png#pic_center" alt="在这里插入图片描述"></p>
+<p>测试图片为：cat_test2.jpg<br><img src="https://img-blog.csdnimg.cn/5f13ce6f40cf42abab00680af42486f4.jpeg#pic_center" alt><br>测试结果：<br><img src="https://img-blog.csdnimg.cn/cdff445c0dbd462e81f723c05f3ec8b1.png#pic_center" alt></p>
 <hr>
 <h1 id="欢迎关注公众号：【千艺千寻】，共同成长"><a href="#欢迎关注公众号：【千艺千寻】，共同成长" class="headerlink" title="欢迎关注公众号：【千艺千寻】，共同成长"></a><strong>欢迎关注公众号：【千艺千寻】，共同成长</strong></h1><p><img src="/source/images/%E6%9C%AB%E6%A0%8F.png" alt></p>
 <hr>

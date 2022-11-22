@@ -501,21 +501,21 @@
 </a></p>
 <h1 id="2-AlexNet"><a href="#2-AlexNet" class="headerlink" title="2. AlexNet"></a>2. AlexNet</h1><p>AlexNet 是 2012 年 ISLVRC 2012（ImageNet Large Scale Visual Recognition Challenge） 竞赛的冠军网络， 分类准确率由传统的 70%+ 提升到 80%+。它是由 Hinton 和他的学生Alex Krizhevsky设计的。 </p>
 <p>AlexNet 2012 年在大规模图像识别中一起绝尘，从此引领了深度神经网络的热潮。另外，AlexNet 提出的 ReLU 激活函数， LRN， GPU 加速，数据增强，Dropout 失活部分神经元等方式，深刻的影响了后续的神经网络。</p>
-<h2 id="2-1-网络框架"><a href="#2-1-网络框架" class="headerlink" title="2.1 网络框架"></a>2.1 网络框架</h2><p><img src="https://img-blog.csdnimg.cn/65517181ecc44f59a61d75476534a62e.png#pic_center" alt="在这里插入图片描述"></p>
-<p>AlexNet 共有 8 层组成，其中包括 5 个卷积层，3 个全连接层。各层参数如下：<br><img src="https://img-blog.csdnimg.cn/2889f07a00864f6c9e042b91adbd5d82.png#pic_center" alt="在这里插入图片描述"><br>计算公式参考<a href="https://blog.csdn.net/wwt18811707971/article/details/127820299?spm=1001.2014.3001.5501" target="_blank" rel="noopener">深度学习系列1——Pytorch 图像分类(LeNet)</a>，此处不再列出。</p>
-<p>其传输框图如下：<br><img src="https://img-blog.csdnimg.cn/fa3cd74c126b47e69ea08cf42c095b3b.png#pic_center" alt="在这里插入图片描述"></p>
+<h2 id="2-1-网络框架"><a href="#2-1-网络框架" class="headerlink" title="2.1 网络框架"></a>2.1 网络框架</h2><p><img src="https://img-blog.csdnimg.cn/65517181ecc44f59a61d75476534a62e.png#pic_center" alt></p>
+<p>AlexNet 共有 8 层组成，其中包括 5 个卷积层，3 个全连接层。各层参数如下：<br><img src="https://img-blog.csdnimg.cn/2889f07a00864f6c9e042b91adbd5d82.png#pic_center" alt><br>计算公式参考<a href="https://blog.csdn.net/wwt18811707971/article/details/127820299?spm=1001.2014.3001.5501" target="_blank" rel="noopener">深度学习系列1——Pytorch 图像分类(LeNet)</a>，此处不再列出。</p>
+<p>其传输框图如下：<br><img src="https://img-blog.csdnimg.cn/fa3cd74c126b47e69ea08cf42c095b3b.png#pic_center" alt></p>
 <p>卷积层1数据传输如下：</p>
-<p><img src="https://img-blog.csdnimg.cn/db825339199c47338ffa6259f3d84c95.png#pic_center" alt="在这里插入图片描述"><br>其余层依此类似，只需类推。</p>
+<p><img src="https://img-blog.csdnimg.cn/db825339199c47338ffa6259f3d84c95.png#pic_center" alt><br>其余层依此类似，只需类推。</p>
 <h2 id="2-2-补充"><a href="#2-2-补充" class="headerlink" title="2.2 补充"></a>2.2 补充</h2><h3 id="2-2-1-过拟合"><a href="#2-2-1-过拟合" class="headerlink" title="2.2.1 过拟合"></a>2.2.1 过拟合</h3><p>根本原因是特征维度过多， <strong>模型假设过于复杂， 参数过多， 训练数据过少</strong>， 噪声过多，导致拟合的函数完美的预测训练集， 但对新数据的测试集预测结果差。 过度的拟合了训练数据， 而没有考虑到泛化能力。</p>
 <p>过拟合主要受数据量和模型复杂度的影响。</p>
-<p><img src="https://img-blog.csdnimg.cn/f207555d1d264e88a92f0008318dca93.png#pic_center" alt="在这里插入图片描述"></p>
+<p><img src="https://img-blog.csdnimg.cn/f207555d1d264e88a92f0008318dca93.png#pic_center" alt></p>
 <p>一句话就是：平时作业完成的非常好，但是考试就歇菜了。</p>
 <h3 id="2-2-2-Dropout"><a href="#2-2-2-Dropout" class="headerlink" title="2.2.2 Dropout"></a>2.2.2 Dropout</h3><p>网络正向传播过程中随机失活一部分神经元，减少过拟合。Dropout 主要用在全连接层。</p>
-<p><img src="https://img-blog.csdnimg.cn/fe739a334c3f4fb6bb5e73f3f6be2815.png#pic_center" alt="在这里插入图片描述"></p>
+<p><img src="https://img-blog.csdnimg.cn/fe739a334c3f4fb6bb5e73f3f6be2815.png#pic_center" alt></p>
 <h1 id="3-demo-实现"><a href="#3-demo-实现" class="headerlink" title="3. demo 实现"></a>3. demo 实现</h1><h2 id="3-1-数据集"><a href="#3-1-数据集" class="headerlink" title="3.1 数据集"></a>3.1 数据集</h2><p>本文使用花分类数据集，下载链接: <a href="http://download.tensorflow.org/example_images/flower_photos.tgz" target="_blank" rel="noopener">花分类数据集——http://download.tensorflow.org/example_images/flower_photos.tgz</a></p>
-<p><img src="https://img-blog.csdnimg.cn/527b7a338ae7489f910675254675615c.png#pic_center" alt="在这里插入图片描述"></p>
+<p><img src="https://img-blog.csdnimg.cn/527b7a338ae7489f910675254675615c.png#pic_center" alt></p>
 <p>数据集划分参考这个<a href="https://blog.csdn.net/m0_37867091/article/details/107150142" target="_blank" rel="noopener">pytorch图像分类篇：3.搭建AlexNet并训练花分类数据集</a></p>
-<h2 id="3-1-demo-结构："><a href="#3-1-demo-结构：" class="headerlink" title="3.1 demo 结构："></a>3.1 demo 结构：</h2><p><img src="https://img-blog.csdnimg.cn/cf4ef19a778f4035aa038af45bff70af.png#pic_center" alt="在这里插入图片描述"></p>
+<h2 id="3-1-demo-结构："><a href="#3-1-demo-结构：" class="headerlink" title="3.1 demo 结构："></a>3.1 demo 结构：</h2><p><img src="https://img-blog.csdnimg.cn/cf4ef19a778f4035aa038af45bff70af.png#pic_center" alt></p>
 <p>在 CPU 训练的基础上，为了修改为 GPU 训练，因此单独修改了一个文件 train_gpu.py。</p>
 <h2 id="3-2-model-py"><a href="#3-2-model-py" class="headerlink" title="3.2 model.py"></a>3.2 model.py</h2><pre class="line-numbers language-python"><code class="language-python"><span class="token triple-quoted-string string">"""
 模型
@@ -593,7 +593,7 @@
 <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p>此处的网络模型仅使用了一半的参数，即原 AlexNet 两块 GPU 中的一块。</p>
 <h3 id="3-2-1-nn-Sequential-介绍"><a href="#3-2-1-nn-Sequential-介绍" class="headerlink" title="3.2.1 nn.Sequential 介绍"></a>3.2.1 nn.Sequential 介绍</h3><p>nn.Sequential 是 nn.Module 的容器，用于<strong>按顺序</strong>包装一组网络层，在模型复杂情况下，使用 nn.Sequential 方法对模块划分。除了 nn.Sequetial，还有 nn.ModuleList 和 nn.ModuleDict。</p>
-<p><img src="https://img-blog.csdnimg.cn/656d92f257e241348bc649a9e5ae901d.png#pic_center" alt="在这里插入图片描述"></p>
+<p><img src="https://img-blog.csdnimg.cn/656d92f257e241348bc649a9e5ae901d.png#pic_center" alt></p>
 <h3 id="3-2-2-Tensor-展平"><a href="#3-2-2-Tensor-展平" class="headerlink" title="3.2.2  Tensor 展平"></a>3.2.2  Tensor 展平</h3><p>直接使用 torch.flatten 方法展平张量</p>
 <pre class="line-numbers language-python"><code class="language-python">
  x <span class="token operator">=</span> torch<span class="token punctuation">.</span>flatten<span class="token punctuation">(</span>x<span class="token punctuation">,</span> start_dim<span class="token operator">=</span><span class="token number">1</span><span class="token punctuation">)</span>    <span class="token comment" spellcheck="true"># 二维平坦</span>
@@ -711,7 +711,7 @@ net <span class="token operator">=</span> AlexNet<span class="token punctuation"
     <span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">"Finshed Training."</span><span class="token punctuation">)</span>
 <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p>训练过程可视化信息输出：</p>
-<p><img src="https://img-blog.csdnimg.cn/fb6dcf0ecd424d6bb91480e680524068.png#pic_center" alt="在这里插入图片描述"><br><strong>GPU 训练代码：</strong> 仅在 CPU 训练的基础上做了数据转换处理。</p>
+<p><img src="https://img-blog.csdnimg.cn/fb6dcf0ecd424d6bb91480e680524068.png#pic_center" alt><br><strong>GPU 训练代码：</strong> 仅在 CPU 训练的基础上做了数据转换处理。</p>
 <pre class="line-numbers language-python"><code class="language-python">
 <span class="token triple-quoted-string string">"""
 训练(GPU)
@@ -896,11 +896,11 @@ net <span class="token operator">=</span> AlexNet<span class="token punctuation"
 
 <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p>预测结果如下：</p>
-<p><img src="https://img-blog.csdnimg.cn/d5c7d1622c404b7ba5f0112dd96bf93a.png#pic_center" alt="在这里插入图片描述"></p>
+<p><img src="https://img-blog.csdnimg.cn/d5c7d1622c404b7ba5f0112dd96bf93a.png#pic_center" alt></p>
 <p>输入向日葵，预测准确率为 1.0 。</p>
 <hr>
 <p><strong>欢迎关注公众号：【千艺千寻】，共同成长</strong></p>
-<p><img src="https://img-blog.csdnimg.cn/20200704120239641.jpg#pic_center" alt="在这里插入图片描述"></p>
+<p><img src="https://img-blog.csdnimg.cn/20200704120239641.jpg#pic_center" alt></p>
 <hr>
 <h1 id="参考："><a href="#参考：" class="headerlink" title="参考："></a>参考：</h1><ol>
 <li><a href="https://blog.csdn.net/m0_37867091/article/details/107150142" target="_blank" rel="noopener">pytorch图像分类篇：3.搭建AlexNet并训练花分类数据集</a></li>
