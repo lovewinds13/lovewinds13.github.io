@@ -522,109 +522,185 @@
             <div id="articleContent">
                 <hr>
 <h2 id="1-推挤时，45-度走线推入焊盘中"><a href="#1-推挤时，45-度走线推入焊盘中" class="headerlink" title="1. 推挤时，45 度走线推入焊盘中"></a>1. 推挤时，45 度走线推入焊盘中</h2><p>走线状态下，去掉下图所选之前的 “√”</p>
-<p><img src="https://img-blog.csdnimg.cn/2020071322492694.PNG" alt="在这里插入图片描述"></p>
+<p><img src="https://img-blog.csdnimg.cn/2020071322492694.PNG" alt></p>
 <h2 id="2-推挤走线"><a href="#2-推挤走线" class="headerlink" title="2. 推挤走线"></a>2. 推挤走线</h2><p>命令：slide</p>
-<p><img src="https://img-blog.csdnimg.cn/20200713225557774.PNG" alt="在这里插入图片描述"></p>
+<p><img src="https://img-blog.csdnimg.cn/20200713225557774.PNG" alt></p>
 <h2 id="3-Z-copy-命令"><a href="#3-Z-copy-命令" class="headerlink" title="3. Z-copy 命令"></a>3. Z-copy 命令</h2><p>Z-copy 用于 PCB 导入板框后，禁止布线层的生成（同时也是 PCB 覆铜时区域），操作方法如下：</p>
 <p>（1）先确定板框层（board geometry outline），如下图：</p>
-<p><img src="https://img-blog.csdnimg.cn/20200805095503466.png" alt="在这里插入图片描述"><br>（2）选择 Z-copy 命令，如下图：</p>
-<p><img src="https://img-blog.csdnimg.cn/20200805100556814.png" alt="在这里插入图片描述"></p>
+<p><img src="https://img-blog.csdnimg.cn/20200805095503466.png" alt></p>
+<p>（2）选择 Z-copy 命令，如下图：</p>
+<p><img src="https://img-blog.csdnimg.cn/20200805100556814.png" alt></p>
 <p>参数设置如下，设置完成后选择板框层即可生成布线区域》</p>
-<p><img src="https://img-blog.csdnimg.cn/20200805100955252.png" alt="在这里插入图片描述"></p>
+<p><img src="https://img-blog.csdnimg.cn/20200805100955252.png" alt></p>
 <h2 id="4-过孔"><a href="#4-过孔" class="headerlink" title="4. 过孔"></a>4. 过孔</h2><p>需要先使用 PAD Designer 制作过孔，然后在添加到 allegro 中。制作方式同通孔焊盘，只是过孔无需阻焊层和钢网层。</p>
 <h2 id="5-测量距离显示两种单位"><a href="#5-测量距离显示两种单位" class="headerlink" title="5. 测量距离显示两种单位"></a>5. 测量距离显示两种单位</h2><p>（1）先确定默认使用的是什么单位，这里默认的是英制（mil），如下图：</p>
-<p><img src="https://img-blog.csdnimg.cn/2020080619350532.png" alt="在这里插入图片描述"><br>（2）增加公制测量距离（mm），如下图，然后确定。</p>
-<p><img src="https://img-blog.csdnimg.cn/20200806193922112.png" alt="在这里插入图片描述"><br>（3）这样设置之后就可以在测量距离的时候看到两种单位的距离了。</p>
-<p><img src="https://img-blog.csdnimg.cn/20200806194050141.png" alt="在这里插入图片描述"></p>
+<p><img src="https://img-blog.csdnimg.cn/2020080619350532.png" alt></p>
+<p>（2）增加公制测量距离（mm），如下图，然后确定。</p>
+<p><img src="https://img-blog.csdnimg.cn/20200806193922112.png" alt></p>
+<p>（3）这样设置之后就可以在测量距离的时候看到两种单位的距离了。</p>
+<p><img src="https://img-blog.csdnimg.cn/20200806194050141.png" alt></p>
 <h2 id="6-添加等长的时候，添加-match-group-后，actual-和margin-数据无显示"><a href="#6-添加等长的时候，添加-match-group-后，actual-和margin-数据无显示" class="headerlink" title="6.  添加等长的时候，添加 match group 后，actual 和margin 数据无显示"></a>6.  添加等长的时候，添加 match group 后，actual 和margin 数据无显示</h2><p><strong>现象：</strong></p>
-<p><img src="https://img-blog.csdnimg.cn/20200808105919418.png" alt="在这里插入图片描述"></p>
+<p><img src="https://img-blog.csdnimg.cn/20200808105919418.png" alt></p>
 <p><strong>解决：</strong></p>
 <p>（1）如下图，找到对应的选项。</p>
-<p><img src="https://img-blog.csdnimg.cn/20200808110121366.PNG" alt="在这里插入图片描述"><br>（2）打开下图所示的选项，然后确定。再返回规则约束选项，重新分析一下即可显示出 actual 和 margin 的数值。【如果这样操作之后还是不能够显示，可在 setup ——&gt; constraints ——&gt; Modes 的 Electrical Options 里面勾选延时分析选项】</p>
-<p><img src="https://img-blog.csdnimg.cn/20200808110531893.png" alt="在这里插入图片描述"></p>
+<p><img src="https://img-blog.csdnimg.cn/20200808110121366.PNG" alt></p>
+<p>（2）打开下图所示的选项，然后确定。再返回规则约束选项，重新分析一下即可显示出 actual 和 margin 的数值。【如果这样操作之后还是不能够显示，可在 setup ——&gt; constraints ——&gt; Modes 的 Electrical Options 里面勾选延时分析选项】</p>
+<p><img src="https://img-blog.csdnimg.cn/20200808110531893.png" alt></p>
 <p>（3）调整设置之后的显示结果如下，就显示出实际的走线长度和还欠缺走线的长度。</p>
-<p><img src="https://img-blog.csdnimg.cn/20200808110702990.png" alt="在这里插入图片描述"></p>
+<p><img src="https://img-blog.csdnimg.cn/20200808110702990.png" alt></p>
 <h2 id="7-等长规则的添加"><a href="#7-等长规则的添加" class="headerlink" title="7. 等长规则的添加"></a>7. 等长规则的添加</h2><h3 id="7-1-点对点-match-group-直接添加"><a href="#7-1-点对点-match-group-直接添加" class="headerlink" title="7.1 点对点 match group 直接添加"></a>7.1 点对点 match group 直接添加</h3><p>本方式适用于两个 IC 之间通过走线连接的拓扑结构，在规则管理器中选择同一组走线，然后添加到 Match group 即可，在电机 analysis 之后就可以看到同一组的走线已经添加完成，如下图，选择同一组走线，添加到 match group。</p>
-<p><img src="https://img-blog.csdnimg.cn/20200808141122670.PNG" alt="在这里插入图片描述"><br>添加完成后，如下图，就可以看到等长的信息了。</p>
-<p><img src="https://img-blog.csdnimg.cn/20200808141352922.PNG" alt="在这里插入图片描述"></p>
+<p><img src="https://img-blog.csdnimg.cn/20200808141122670.PNG" alt></p>
+<p>添加完成后，如下图，就可以看到等长的信息了。</p>
+<p><img src="https://img-blog.csdnimg.cn/20200808141352922.PNG" alt></p>
 <h3 id="7-2-模型添加"><a href="#7-2-模型添加" class="headerlink" title="7.2 模型添加"></a>7.2 模型添加</h3><p>此方式常用于两个 IC 之间串联电阻的拓扑，当然直接走线连接也是可以的。</p>
 <p>（1）选中等长线中的一根线，然后建立模型，如下图所示：</p>
-<p><img src="https://img-blog.csdnimg.cn/20200808141643189.PNG" alt="在这里插入图片描述"><br>（2）建立模型后进入如下的界面</p>
-<p><img src="https://img-blog.csdnimg.cn/20200808141829782.PNG" alt="在这里插入图片描述"><br>（3）如下图，进入具体的参数设置。</p>
-<p><img src="https://img-blog.csdnimg.cn/20200808142102290.png" alt="在这里插入图片描述"><br>（4）参数设置如下，此处需要结合实际的应用调整。</p>
-<p><img src="https://img-blog.csdnimg.cn/2020080814230413.png" alt="在这里插入图片描述"><br>设置完参数，点击 add。</p>
-<p><img src="https://img-blog.csdnimg.cn/20200808143609357.png" alt="在这里插入图片描述"></p>
+<p><img src="https://img-blog.csdnimg.cn/20200808141643189.PNG" alt></p>
+<p>（2）建立模型后进入如下的界面</p>
+<p><img src="https://img-blog.csdnimg.cn/20200808141829782.PNG" alt></p>
+<p>（3）如下图，进入具体的参数设置。</p>
+<p><img src="https://img-blog.csdnimg.cn/20200808142102290.png" alt></p>
+<p>（4）参数设置如下，此处需要结合实际的应用调整。</p>
+<p><img src="https://img-blog.csdnimg.cn/2020080814230413.png" alt></p>
+<p>设置完参数，点击 add。</p>
+<p><img src="https://img-blog.csdnimg.cn/20200808143609357.png" alt></p>
 <p>（5）确定设置之后，更新规则到约束管理器，点击下图操作：</p>
-<p><img src="https://img-blog.csdnimg.cn/20200808142551437.PNG" alt="在这里插入图片描述"><br>如下图，约束管理器里面已经可以看到第一根走线的规则添加成功了。</p>
-<p><img src="https://img-blog.csdnimg.cn/20200808143843524.png" alt="在这里插入图片描述"><br>然后把其他需要同组等长约束的走线一起添加到第一根线的规则上，如下图：</p>
-<p><img src="https://img-blog.csdnimg.cn/20200808144117318.png" alt="在这里插入图片描述"></p>
+<p><img src="https://img-blog.csdnimg.cn/20200808142551437.PNG" alt></p>
+<p>如下图，约束管理器里面已经可以看到第一根走线的规则添加成功了。</p>
+<p><img src="https://img-blog.csdnimg.cn/20200808143843524.png" alt></p>
+<p>然后把其他需要同组等长约束的走线一起添加到第一根线的规则上，如下图：</p>
+<p><img src="https://img-blog.csdnimg.cn/20200808144117318.png" alt></p>
 <h2 id="8-光绘文件配置"><a href="#8-光绘文件配置" class="headerlink" title="8. 光绘文件配置"></a>8. 光绘文件配置</h2><p>需要添加的文件，下面以一个 4 层板为例。</p>
 <p>（1）<strong>电气层——顶层示例：</strong></p>
-<p><img src="https://img-blog.csdnimg.cn/20200808170828804.PNG" alt="在这里插入图片描述"><br>|板层|文件|<br>|—|—|<br>|TOP|ETCH /PIN /VIA CLASS /OUTLINE|<br>|GND|ETCH /PIN /VIA CLASS /OUTLINE|<br>|PWR|ETCH /PIN /VIA CLASS /OUTLINE|<br>|BOTTOM|ETCH /PIN /VIA CLASS /OUTLINE|</p>
-<p>（2）<strong>丝印层——顶层示例：</strong></p>
-<p><img src="https://img-blog.csdnimg.cn/20200808172026452.png" alt="在这里插入图片描述"><br>|CLASS|文件|<br>|—|—|<br>|Board geometry|SILKSCREEN|<br>|Package geometry|SILKSCREEN|<br>|Refdes|SILKSCREENE|</p>
-<p>（3）<strong>阻焊层——顶层示例：</strong></p>
-<p><img src="https://img-blog.csdnimg.cn/20200808173018150.png" alt="在这里插入图片描述"></p>
+<p><img src="https://img-blog.csdnimg.cn/20200808170828804.PNG" alt></p>
 <table>
 <thead>
 <tr>
-<th>CLASS</th>
-<th>文件</th>
+<th align="center">板层</th>
+<th align="center">文件</th>
 </tr>
 </thead>
 <tbody><tr>
-<td>Board geometry</td>
-<td>SOLDMASK_TOP</td>
+<td align="center">TOP</td>
+<td align="center">ETCH /PIN /VIA CLASS /OUTLINE</td>
 </tr>
 <tr>
-<td>Package geometry</td>
-<td>SOLDMASK_TOP</td>
+<td align="center">GND</td>
+<td align="center">ETCH /PIN /VIA CLASS /OUTLINE</td>
 </tr>
 <tr>
-<td>PIN</td>
-<td>SOLDMASK_TOP</td>
+<td align="center">PWR</td>
+<td align="center">ETCH /PIN /VIA CLASS /OUTLINE</td>
 </tr>
 <tr>
-<td>VIA CLASS</td>
-<td>SOLDMASK_TOP</td>
+<td align="center">BOTTOM</td>
+<td align="center">ETCH /PIN /VIA CLASS /OUTLINE</td>
+</tr>
+</tbody></table>
+<p>（2）<strong>丝印层——顶层示例：</strong></p>
+<p><img src="https://img-blog.csdnimg.cn/20200808172026452.png" alt></p>
+<table>
+<thead>
+<tr>
+<th align="center">CLASS</th>
+<th align="center">文件</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">Board geometry</td>
+<td align="center">SILKSCREEN</td>
+</tr>
+<tr>
+<td align="center">Package geometry</td>
+<td align="center">SILKSCREEN</td>
+</tr>
+<tr>
+<td align="center">Refdes</td>
+<td align="center">SILKSCREENE</td>
+</tr>
+</tbody></table>
+<p>（3）<strong>阻焊层——顶层示例：</strong></p>
+<p><img src="https://img-blog.csdnimg.cn/20200808173018150.png" alt></p>
+<table>
+<thead>
+<tr>
+<th align="center">CLASS</th>
+<th align="center">文件</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">Board geometry</td>
+<td align="center">SOLDMASK_TOP</td>
+</tr>
+<tr>
+<td align="center">Package geometry</td>
+<td align="center">SOLDMASK_TOP</td>
+</tr>
+<tr>
+<td align="center">PIN</td>
+<td align="center">SOLDMASK_TOP</td>
+</tr>
+<tr>
+<td align="center">VIA CLASS</td>
+<td align="center">SOLDMASK_TOP</td>
 </tr>
 </tbody></table>
 <p>（4）<strong>钢网层——顶层示例：</strong></p>
-<p><img src="https://img-blog.csdnimg.cn/202008081738244.png" alt="在这里插入图片描述"></p>
+<p><img src="https://img-blog.csdnimg.cn/202008081738244.png" alt></p>
 <table>
 <thead>
 <tr>
-<th>CLASS</th>
-<th>文件</th>
+<th align="center">CLASS</th>
+<th align="center">文件</th>
 </tr>
 </thead>
 <tbody><tr>
-<td>Package geometry</td>
-<td>PASTMASK_TOP</td>
+<td align="center">Package geometry</td>
+<td align="center">PASTMASK_TOP</td>
 </tr>
 <tr>
-<td>PIN</td>
-<td>PASTMASK_TOP</td>
+<td align="center">PIN</td>
+<td align="center">PASTMASK_TOP</td>
 </tr>
 </tbody></table>
 <p>（5）<strong>钻孔：</strong></p>
-<p><img src="https://img-blog.csdnimg.cn/20200808181329856.png" alt="在这里插入图片描述"><br>|CLASS|文件|<br>|—|—|<br>|Manufacturing|NCLEGEND-1-4|<br>|Manufacturing|NCDRILL_LEGEND|<br>|Manufacturing|NCDRILL_FIGURE|</p>
+<p><img src="https://img-blog.csdnimg.cn/20200808181329856.png" alt></p>
+<table>
+<thead>
+<tr>
+<th align="center">CLASS</th>
+<th align="center">文件</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">Manufacturing</td>
+<td align="center">NCLEGEND-1-4</td>
+</tr>
+<tr>
+<td align="center">Manufacturing</td>
+<td align="center">NCDRILL_LEGEND</td>
+</tr>
+<tr>
+<td align="center">Manufacturing</td>
+<td align="center">NCDRILL_FIGURE</td>
+</tr>
+</tbody></table>
 <p>NCLEGEND-1-4 需要在添加之前生成，操作如下图：</p>
-<p><img src="https://img-blog.csdnimg.cn/20200808181652924.PNG" alt="在这里插入图片描述"></p>
+<p><img src="https://img-blog.csdnimg.cn/20200808181652924.PNG" alt></p>
 <p>PCB 上面的表格即为钻孔参数【注：对于同一类孔径的钻孔，在生成文件之前可进行合并成同一类】</p>
 <p>至此，配置输出的印刷板的光绘文件就全部生成了，4 层板共计 11 项，如下图：</p>
-<p><img src="https://img-blog.csdnimg.cn/20200808182234280.png" alt="在这里插入图片描述"></p>
+<p><img src="https://img-blog.csdnimg.cn/20200808182234280.png" alt></p>
 <p>为了方便查看装配文件，再整理顶层，底层的装配文件，如下图：</p>
-<p><img src="https://img-blog.csdnimg.cn/20200808182912259.png" alt="在这里插入图片描述"></p>
+<p><img src="https://img-blog.csdnimg.cn/20200808182912259.png" alt></p>
 <h2 id="9-光绘文件输出"><a href="#9-光绘文件输出" class="headerlink" title="9. 光绘文件输出"></a>9. 光绘文件输出</h2><h3 id="9-1-参数设置"><a href="#9-1-参数设置" class="headerlink" title="9.1 参数设置"></a>9.1 参数设置</h3><p>（1）输出的类型、精度、单位等参数设置。</p>
-<p><img src="https://img-blog.csdnimg.cn/20200808184738814.png" alt="在这里插入图片描述"></p>
+<p><img src="https://img-blog.csdnimg.cn/20200808184738814.png" alt></p>
 <p>（2）输出正片（负片）、0 线宽的等参数设置。</p>
-<p><img src="https://img-blog.csdnimg.cn/20200808185054775.png" alt="在这里插入图片描述"></p>
-<h3 id="9-2-输出文件"><a href="#9-2-输出文件" class="headerlink" title="9.2 输出文件"></a>9.2 输出文件</h3><p><img src="https://img-blog.csdnimg.cn/20200808191140670.png" alt="在这里插入图片描述"><br>弹出的提示信息若无 error 提示，则表示输出光绘成功。</p>
+<p><img src="https://img-blog.csdnimg.cn/20200808185054775.png" alt></p>
+<h3 id="9-2-输出文件"><a href="#9-2-输出文件" class="headerlink" title="9.2 输出文件"></a>9.2 输出文件</h3><p><img src="https://img-blog.csdnimg.cn/20200808191140670.png" alt></p>
+<p>弹出的提示信息若无 error 提示，则表示输出光绘成功。</p>
 <h3 id="9-2-输出其他文件"><a href="#9-2-输出其他文件" class="headerlink" title="9.2 输出其他文件"></a>9.2 输出其他文件</h3><p>（1）器件坐标文件：file ——&gt; export ——&gt; placement… 默认输出即可；</p>
 <p>（2）IPC 文件：file ——&gt; export ——&gt; IPC-D-356… 默认输出即可</p>
 <p>（3）pdf 装配文件：file ——&gt; export ——&gt; PDF… 参数配置如下：</p>
-<p><img src="https://img-blog.csdnimg.cn/20200808191915238.png" alt="在这里插入图片描述"></p>
+<p><img src="https://img-blog.csdnimg.cn/20200808191915238.png" alt></p>
 <p><strong>需要注意的两点：</strong> </p>
 <p>1）输出的时候，为了镜像过来与正常的板子一致，在光绘输出配置里需要勾选：Film mirrored；</p>
 <p>2）因为我们在设计封装的时候，在装配层也是放置了文字的，而我们输出的时候并不需要这些文件，故输出 PDF 文件之前需删除装配层的文字。</p>
@@ -1122,19 +1198,19 @@
             <div class="article-badge left-badge text-color">
                 <i class="fa fa-chevron-left"></i>&nbsp;上一篇</div>
             <div class="card">
-                <a href="/2022/11/21/mos-guan-san-ji-guan-yi-xie-chang-yong-de-ying-jian-she-ji-dian-lu-fen-xi/">
+                <a href="/2022/11/21/shen-du-xue-xi-xi-lie-2-pytorch-tu-xiang-fen-lei-alexnet/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/1.jpg" class="responsive-img" alt="MOS管（三极管）——一些常用的硬件设计电路分析">
+                        <img src="/medias/featureimages/4.jpg" class="responsive-img" alt="深度学习系列2——Pytorch 图像分类(AlexNet)">
                         
-                        <span class="card-title">MOS管（三极管）——一些常用的硬件设计电路分析</span>
+                        <span class="card-title">深度学习系列2——Pytorch 图像分类(AlexNet)</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            Mos管,电路设计
+                            DeepLearning,AlexNet,Pytorch
                         
                     </div>
                     <div class="publish-info">
@@ -1145,8 +1221,8 @@
                             
                             <i class="fa fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/Hardware/" class="post-category" target="_blank">
-                                    Hardware
+                            <a href="/categories/DeepLearning/" class="post-category" target="_blank">
+                                    DeepLearning
                                 </a>
                             
                             
