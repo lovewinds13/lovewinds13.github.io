@@ -4,13 +4,16 @@
 
 <head><meta name="generator" content="Hexo 3.9.0">
     <meta charset="utf-8">
-    <meta name="keywords" content="MOS管（三极管）——一些常用的硬件设计电路分析, Hardware  DeepLearning  霁风 lovewinds13 嵌入式 深度学习 千艺千寻">
+    <meta name="keywords" content="Allegro专题【5】——Orcad to PCB Editor, Hardware  DeepLearning  霁风 lovewinds13 嵌入式 深度学习 千艺千寻">
     <meta name="baidu-site-verification" content="fmlEuI34ir">
     <meta name="google-site-verification" content="yCy2azpds5XSuGZvis6OuA-XIGF5GuGpYRAaGfD6o48">
     <meta name="360-site-verification" content="b7c11a830ef90fd1464ad6206bb7b6e7">
     <meta name="description" content="
-1. 概述芯片的集成度虽然越来越高，但是整个电路功能的实现，还是离不开分离器件的搭配，本文就针对笔者在实际工作中的关于 MOS 管（三极管）的应用做一些整理。
-本文所介绍的功能，使用三极管也是可以的，但是实际应用中，多使用 MOS 管，故">
+前面已经基本完成了原理图库和器件封装库的制作，接下来，正式开始到原理图和 PCB 的设计。这里是以 STM32 的开发板为例。
+
+1. Orcad只要准备好了元器件的原理图库，剩下的就是按照电气特性完成连接。
+
+1.1  DRC 检查做完">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -18,7 +21,7 @@
     <meta name="format-detection" content="telephone=no">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <title>MOS管（三极管）——一些常用的硬件设计电路分析 | 霁风的博客</title>
+    <title>Allegro专题【5】——Orcad to PCB Editor | 霁风的博客</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/font-awesome.min.css">
@@ -331,13 +334,13 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/1.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/27.jpg')">
     <div class="container">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
                     <div class="description center-align post-title">
-                        MOS管（三极管）——一些常用的硬件设计电路分析
+                        Allegro专题【5】——Orcad to PCB Editor
                     </div>
                 </div>
             </div>
@@ -447,7 +450,19 @@
                 <div class="col s7">
                     
                     <div class="article-tag">
-                        <span class="chip bg-color">无标签</span>
+                        
+                        <a href="/tags/PCB/" target="_blank">
+                            <span class="chip bg-color">PCB</span>
+                        </a>
+                        
+                        <a href="/tags/Allegro/" target="_blank">
+                            <span class="chip bg-color">Allegro</span>
+                        </a>
+                        
+                        <a href="/tags/Tools/" target="_blank">
+                            <span class="chip bg-color">Tools</span>
+                        </a>
+                        
                     </div>
                     
                 </div>
@@ -468,7 +483,7 @@
             <div class="post-info">
                 <div class="post-date info-break-policy">
                     <i class="fa fa-calendar-minus-o fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2022-11-21
+                    2020-06-27
                 </div>
 
                 <div class="post-author info-break-policy">
@@ -482,14 +497,14 @@
                 
                 <div class="info-break-policy">
                     <i class="fa fa-file-word-o fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    1.8k
+                    910
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="fa fa-clock-o fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    7 分
+                    3 分
                 </div>
                 
                 
@@ -506,210 +521,57 @@
         <div class="card-content article-card-content">
             <div id="articleContent">
                 <hr>
-<h2 id="1-概述"><a href="#1-概述" class="headerlink" title="1. 概述"></a>1. 概述</h2><p>芯片的集成度虽然越来越高，但是整个电路功能的实现，还是离不开分离器件的搭配，本文就针对笔者在实际工作中的关于 MOS 管（三极管）的应用做一些整理。</p>
-<p>本文所介绍的功能，使用三极管也是可以的，但是实际应用中，多使用 MOS 管，故本文多以 MOS 管进行说明。</p>
-<h2 id="2-应用"><a href="#2-应用" class="headerlink" title="2. 应用"></a>2. 应用</h2><h3 id="2-1-NMOS-开关控制"><a href="#2-1-NMOS-开关控制" class="headerlink" title="2.1 NMOS 开关控制"></a>2.1 NMOS 开关控制</h3><p><img src="https://img-blog.csdnimg.cn/2020070923233216.png" alt><br>如图，通过 NMOS 的开关作用，完成对 LED 的亮灭控制。此时 MOS 管工作于截止区和可变电阻区。</p>
-<table>
-<thead>
-<tr>
-<th>控制端</th>
-<th>状态</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>LED0 为高电平</td>
-<td>点亮 LED</td>
-</tr>
-<tr>
-<td>LED0 为低电平</td>
-<td>LED熄灭</td>
-</tr>
-</tbody></table>
-<p>对于 NMOS ，当 Vgs = Vg - Vs &gt; 0 时，NMOS 导通；当 Vgs = Vg - Vs &lt; 0 时，NMOS 断开。</p>
-<h3 id="2-2-PMOS-电源控制"><a href="#2-2-PMOS-电源控制" class="headerlink" title="2.2 PMOS 电源控制"></a>2.2 PMOS 电源控制</h3><h4 id="2-2-1-IO-控制"><a href="#2-2-1-IO-控制" class="headerlink" title="2.2.1 IO 控制"></a>2.2.1 IO 控制</h4><p><img src="https://img-blog.csdnimg.cn/20200709233723876.png" alt></p>
-<p>PMOS 在整个电路系统中，其中某一部分的电路上电通过控制中可以方便用于通断控制。<strong>上图的电路中，使用时需要注意的一点是 VCC_IN 与控制断的电平 PWR_CON 要处于同一标准（eg：VCC_IN = 3.3V；PWR_CON 高电平 = 3.3V）</strong>。</p>
-<table>
-<thead>
-<tr>
-<th>控制端</th>
-<th>状态</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>PWR_CON 为高电平</td>
-<td>PMOS 断开，VCC_OUT  无电压输出</td>
-</tr>
-<tr>
-<td>PWR_CON 为低电平</td>
-<td>PMOS 导通，VCC_OUT  有电压输出，VCC_IN ≈ VCC_OUT</td>
-</tr>
-</tbody></table>
-<p>对于 PMOS ，当 Vgs = Vg - Vs &lt; 0 时，PMOS 导通；当 Vgs = Vg - Vs &gt; 0 时，PMOS 断开。</p>
-<p>因为 MOS 管的导通压降是非常小的，所以在 Rds 之上的能量损耗是比较少的。</p>
-<h4 id="2-2-2-NMOS-控制-PMOS"><a href="#2-2-2-NMOS-控制-PMOS" class="headerlink" title="2.2.2 NMOS 控制 PMOS"></a>2.2.2 NMOS 控制 PMOS</h4><p>进一步地，上图的电路可以扩展为下图，PMOS 的栅极通过 NMOS 来控制。</p>
-<p><img src="https://img-blog.csdnimg.cn/20200709234818506.png" alt><br>拓展为此电路，针对 VCC_IN 与 PWR_CON 电压就没有强制的要求了。当 PWR_CON 为高电平的时候，NMOS 导通，PMOS 的栅极被拉低到低电平，PMOS 导通，VCC_OUT 有电压输出；反之，当 PWR_CON 为低电平时，NMOS 关断，从而使 PMOS 也断开，这样就完成了 VCC_IN 输出电压到 VCC_OUT 的控制。</p>
-<h4 id="2-2-3-按键上电控制"><a href="#2-2-3-按键上电控制" class="headerlink" title="2.2.3 按键上电控制"></a>2.2.3 按键上电控制</h4><p><img src="https://img-blog.csdnimg.cn/2020071000002557.png" alt></p>
-<p>上图的电路，就可以完成所谓的按键开机的功能。</p>
-<p>（1）按下 K1 按键，PMOS 的栅极被拉低，Vgs &lt; 0，PMOS 导通，VCC_OUT 有电压输出；</p>
-<p>（2）VCC_OUT 有电压输出，按键按下时可完成对 MCU 的供电，然后软件端通过 MCU 的 GPIO 进而控制 NMOS 的栅极，即 PWR_CON 。先通过 KEY_DET 检测到按键动作，然后把 PWR_CON 设置为高电平，NMOS 导通，使得 PMOS 也导通，这时候抬起按键，VCC_OUT 一端也有电压稳定输出，就实现了按键上电开机的功能。</p>
-<p>此电路的二极管，功能是防止电压反窜和 对MCU 的 GPIO 的保护。</p>
-<p>功能流程：</p>
-<p><img src="https://img-blog.csdnimg.cn/20200710000824405.png" alt></p>
-<h3 id="2-3-反相（非门逻辑）"><a href="#2-3-反相（非门逻辑）" class="headerlink" title="2.3 反相（非门逻辑）"></a>2.3 反相（非门逻辑）</h3><p>如果电路中需要实现逻辑非的功能，可以采用 MOS 管（三极管）加上电阻来实现，如下图所示：</p>
-<p><img src="https://img-blog.csdnimg.cn/20200710231654178.png" alt></p>
-<table>
-<thead>
-<tr>
-<th>控制端</th>
-<th>状态</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>INPUT 为高电平</td>
-<td>OUTPUT 为低电平</td>
-</tr>
-<tr>
-<td>INPUT 为低电平</td>
-<td>OUTPUT 为高电平</td>
-</tr>
-</tbody></table>
-<p>通过一个 MOS 管（三极管）加上两个电阻，就可以实现非门的逻辑。</p>
-<p>具体的应用可参考本文：<a href="https://blog.csdn.net/wwt18811707971/article/details/89190625" target="_blank" rel="noopener">再学 SPI ——（一）SPI片选信号</a></p>
-<h3 id="2-4-电池防反接功能"><a href="#2-4-电池防反接功能" class="headerlink" title="2.4 电池防反接功能"></a>2.4 电池防反接功能</h3><p>在大多数的电池防反接电路中，常选择压降小的二极管（如：肖特基二极管）来完成，但是针对如 3.7V 锂电池的应用场景，肖特基约为 0.2V 的压降天然的造成了电池容量的浪费，而 MOS 管导通的低压降（Vds）就有很大的优势了。</p>
-<p><img src="https://img-blog.csdnimg.cn/20200721215826886.png" alt></p>
-<p>如上图所示，PMOS 在此处的作用就是防止 VBUS 存在时，LDO Vin 端的电压反窜到电池上。</p>
-<p>原理分析：</p>
-<p>（1）当 USB VBUS 存在时，PMOS 的栅极电压 Vg = 5V，源极电压 Vs = 3.7V（假设此时的电池电压为 3.7V），Vgs = 5 - 3.7 = 1.3V（大于0），此时 PMOS 关断，就起到了防止 Vin 端电压反窜的作用；</p>
-<p>（2）当 USB VBUS 不存在时，PMOS 的栅极通过 10K 的电阻下拉到 GND，因此栅极电压 Vg = 0V，源极电压 Vs = 3.7V（假设此时的电池电压为 3.7V），电池通过 PMOS 自身的寄生二极管使得 Vs = 3.7V，所以 PMOS 的导通电压 Vgs = 0 - 3.7 = -3.7V，PMOS 导通，这样就完成了电池电压到 Vin 端的输入。</p>
-<p>上图的 LDO 电路，只要使能端 LDO_CON 给一个开启信号，输出端 V_3V3 就可以稳定输出 3.3V，C3、C4 为 LDO 的输入输出电容，一般大于 1uF（具体参考数据手册取值）。</p>
-<p>具体的应用可参考本文：<a href="https://blog.csdn.net/wwt18811707971/article/details/80232617" target="_blank" rel="noopener">电源防反接小结</a></p>
-<h3 id="2-5-IO通信双向切换"><a href="#2-5-IO通信双向切换" class="headerlink" title="2.5 IO通信双向切换"></a>2.5 IO通信双向切换</h3><p>在一些设备中，如果两个通过 IO 连接的器件，某一时刻，一个处于休眠，一个处于掉电，这时候就会导致休眠的器件向掉电的器件灌入电流，为了完全杜绝此状态下的电路窜入，可采取如下电路的设计（比如：I2C 的 SDA 信号）</p>
-<p><img src="https://img-blog.csdnimg.cn/20200710234822821.png" alt></p>
-<p><strong>原理分析：</strong></p>
-<table>
-<thead>
-<tr>
-<th>M_DATA</th>
-<th>S_DATA</th>
-<th>导通状态</th>
-<th>方向</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>高电平</td>
-<td>高电平</td>
-<td>Vgs = 0V，MOS 管截止</td>
-<td>M_DATA—&gt;S_DATA</td>
-</tr>
-<tr>
-<td>低电平</td>
-<td>低电平</td>
-<td>Vgs &gt; 0V，MOS 管导通</td>
-<td>M_DATA—&gt;S_DATA</td>
-</tr>
-</tbody></table>
-<table>
-<thead>
-<tr>
-<th>S_DATA</th>
-<th>M_DATA</th>
-<th>导通状态</th>
-<th>方向</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>高电平</td>
-<td>高电平</td>
-<td>M_DATA 通过上拉电阻 R9 设置成高电平，MOS 管截止</td>
-<td>S_DATA—&gt;M_DATA</td>
-</tr>
-<tr>
-<td>低电平</td>
-<td>低电平</td>
-<td>S_DATA = 0，NMOS 的寄生二极管导通，进而使得 Vgs &gt; 0，MOS 管导通，M_DATA 为低电平</td>
-<td>S_DATA—&gt;M_DATA</td>
-</tr>
-</tbody></table>
-<p>如上面两个方向的表格分析，这样通过 NMOS 就完成了一个 IO 双向通信的控制。（只能选择 NMOS，不可选择 PMOS，原因读着可以自行分析一下）</p>
-<h3 id="2-6-3-3V-与-5V-的电平转换"><a href="#2-6-3-3V-与-5V-的电平转换" class="headerlink" title="2.6 3.3V 与 5V 的电平转换"></a>2.6 3.3V 与 5V 的电平转换</h3><p>（1） MOS 实现：</p>
-<p>在实际的应用中，常会遇到通信的两个芯片之间的电平不匹配的问题，这时候就需要通过外部的电路来完成电平匹配的工作（如：MCU 的电平为 3.3V，而外设的电平为 5V）。</p>
-<p><img src="https://img-blog.csdnimg.cn/20200711001539440.png" alt></p>
-<p><strong>原理分析：</strong></p>
-<table>
-<thead>
-<tr>
-<th>3V3_DATA</th>
-<th>5V_DATA</th>
-<th>导通状态</th>
-<th>方向</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>高电平</td>
-<td>高电平</td>
-<td>Vgs = 0V，MOS 管截止</td>
-<td>3V3_DATA—&gt;5V_DATA</td>
-</tr>
-<tr>
-<td>低电平</td>
-<td>低电平</td>
-<td>Vgs &gt; 0V，MOS 管导通</td>
-<td>3V3_DATA—&gt;5V_DATA</td>
-</tr>
-</tbody></table>
-<p>通过 3.3V 端高低电平的变化，使得 NMOS 对应开关，就完成了 3.3V 电平到 5V 电平的转换。</p>
-<table>
-<thead>
-<tr>
-<th>5V_DATA</th>
-<th>3V3_DATA</th>
-<th>导通状态</th>
-<th>方向</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>高电平</td>
-<td>高电平</td>
-<td>MOS 管截止，3V3_DATA 通过上拉电阻 R12 设置成高电平</td>
-<td>5V_DATA—&gt;3V3_DATA</td>
-</tr>
-<tr>
-<td>低电平</td>
-<td>低电平</td>
-<td>5V_DATA= 0，NMOS 的寄生二极管导通，进而使得 Vgs &gt; 0，MOS 管导通，M_DATA 为低电平</td>
-<td>5V_DATA—&gt;3V3_DATA</td>
-</tr>
-</tbody></table>
-<p>反之，也完成了对 5V 设备的数据的读取。</p>
-<p>注：此电路用三极管也可以实现同样的功能，如下图：</p>
-<p><img src="https://img-blog.csdnimg.cn/20200711005859391.png" alt></p>
-<p>（2） 两级 NPN 实现：</p>
-<p>如下图所示，3.3V 与 5V 之间的电平转换，也可以通过两级的 NPN 三极管来实现。</p>
-<p><img src="https://img-blog.csdnimg.cn/20200711004027250.png" alt><br><strong>原理分析：</strong></p>
-<table>
-<thead>
-<tr>
-<th>3V3_DATA</th>
-<th>5V_DATA</th>
-<th>导通状态</th>
-<th>方向</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>高电平</td>
-<td>高电平</td>
-<td>Q10 导通，Q9 截止，5V_DATA 端得到 5V 的高电平</td>
-<td>3V3_DATA—&gt;5V_DATA</td>
-</tr>
-<tr>
-<td>低电平</td>
-<td>低电平</td>
-<td>Q10 截止，Q9 导通，5V_DATA 端得到 低电平</td>
-<td>3V3_DATA—&gt;5V_DATA</td>
-</tr>
-</tbody></table>
+<p>前面已经基本完成了原理图库和器件封装库的制作，接下来，正式开始到原理图和 PCB 的设计。这里是以 STM32 的开发板为例。</p>
 <hr>
-<p>以上为一些常用的 MOS 管的实际应用电路，部分笔者已在实际中进行了验证，如有不足之处，欢迎指正。</p>
+<h2 id="1-Orcad"><a href="#1-Orcad" class="headerlink" title="1. Orcad"></a>1. Orcad</h2><p>只要准备好了元器件的原理图库，剩下的就是按照电气特性完成连接。</p>
+<p><img src="https://img-blog.csdnimg.cn/20200627152605381.png" alt></p>
+<h3 id="1-1-DRC-检查"><a href="#1-1-DRC-检查" class="headerlink" title="1.1  DRC 检查"></a>1.1  DRC 检查</h3><p>做完原理图，我们需要进行 DRC 检查，就电气特性、物理特性等进行检查，这不是必要的。</p>
+<p><img src="https://img-blog.csdnimg.cn/20200627152929459.PNG" alt></p>
+<h3 id="1-2-封装设置"><a href="#1-2-封装设置" class="headerlink" title="1.2 封装设置"></a>1.2 封装设置</h3><p>关键的一个步骤是对器件的封装进行设置。如下图，我们选择原理图工程，右键 –&gt; 编辑对象属性找到 PCB Footprint 栏目对应修改器件的封装。</p>
+<p><img src="https://img-blog.csdnimg.cn/20200627153207852.PNG" alt></p>
+<h3 id="1-3-BOM-导出"><a href="#1-3-BOM-导出" class="headerlink" title="1.3 BOM 导出"></a>1.3 BOM 导出</h3><p>BOM 的导出，同样选择原理图工程文件，然后在 Tools 菜单下，执行 BOM 导出。<br><img src="https://img-blog.csdnimg.cn/20200627153815991.PNG" alt></p>
+<h3 id="1-4-网表导出"><a href="#1-4-网表导出" class="headerlink" title="1.4 网表导出"></a>1.4 网表导出</h3><p>网表导出，这一点不同于 Altium Designer ，原理图可以直接就导入到 PCB 编辑。Orcad 需要先导出网表文件，然后在使用 PCB Editor 导入网表（网表分为第一方网表和第三方网表，注意两者导出、导入时设置是不一样的）。我们同样在 Tools 菜单下，执行网表的导出操作。</p>
+<p><img src="https://img-blog.csdnimg.cn/20200627154247682.PNG" alt></p>
+<p>第一方网表的导出设置如下：</p>
+<p><img src="https://img-blog.csdnimg.cn/2020062715441589.png" alt></p>
+<p>第三方网表的导出设置如下（这里也是导入 allegro ，导入如 AD 、 PADS 等平台选择不同的连接库）</p>
+<p><img src="https://img-blog.csdnimg.cn/20200627155140675.png" alt></p>
+<hr>
+<h2 id="2-Allegro"><a href="#2-Allegro" class="headerlink" title="2. Allegro"></a>2. Allegro</h2><h3 id="2-1-板框绘制"><a href="#2-1-板框绘制" class="headerlink" title="2.1 板框绘制"></a>2.1 板框绘制</h3><p>（1）板框层的绘制，选择 Outline 层进行设置（类似于 AD 的 KEEP-OUT 层）</p>
+<p><img src="https://img-blog.csdnimg.cn/20200627155908269.png" alt></p>
+<h3 id="2-2-DXF-板框导入"><a href="#2-2-DXF-板框导入" class="headerlink" title="2.2 DXF 板框导入"></a>2.2 DXF 板框导入</h3><p>板框通过 CAD 的 DXF 文件的导入</p>
+<p><img src="https://img-blog.csdnimg.cn/20200627160052155.PNG" alt></p>
+<p>参数设置：</p>
+<p><img src="https://img-blog.csdnimg.cn/20200627160555966.png" alt></p>
+<p>映射层到 Allegro：</p>
+<p><img src="https://img-blog.csdnimg.cn/20200627160756151.png" alt></p>
+<p>导入之后使用 Edit —&gt; Change 命令修改到 Outline 层：</p>
+<p><img src="https://img-blog.csdnimg.cn/20200627161158360.png" alt></p>
+<p>导入板框之后，我们可以按照需求，依次设置器件放置区域和布线区域。</p>
+<p>不同层（顶视图、底视图）可通过板框的定位孔，通过坐标的方式进行合并。</p>
+<h3 id="2-3-导入网表"><a href="#2-3-导入网表" class="headerlink" title="2.3 导入网表"></a>2.3 导入网表</h3><p><img src="https://img-blog.csdnimg.cn/20200627161444124.PNG" alt></p>
+<p>导入第一方网表：</p>
+<p><img src="https://img-blog.csdnimg.cn/20200627161601184.png" alt></p>
+<p>导入之后，allegro 会生成导入的报告，如果没有 error ，则表示导入成功。如下图，通过查看 Status ，可知第一方网表已经成功导入了。</p>
+<p><img src="https://img-blog.csdnimg.cn/20200627161857763.PNG" alt></p>
+<h3 id="2-4-放置器件"><a href="#2-4-放置器件" class="headerlink" title="2.4 放置器件"></a>2.4 放置器件</h3><p>分为手动放置，自动放置，Room 区域放置等。</p>
+<p><img src="https://img-blog.csdnimg.cn/20200627162247426.PNG" alt></p>
+<p>这里选择快速放置，我们可以看到器件已经成功导入到 PCB 之中了。</p>
+<p><img src="https://img-blog.csdnimg.cn/20200627162504949.png" alt></p>
+<h3 id="2-5-飞线设置"><a href="#2-5-飞线设置" class="headerlink" title="2.5 飞线设置"></a>2.5 飞线设置</h3><p>隐藏和显示飞线：</p>
+<p><img src="https://img-blog.csdnimg.cn/20200627162806114.png" alt></p>
+<p>显示同一网络（Part 等）飞线设置，选择对应属性，就可以显示出对应属性的飞线。</p>
+<p><img src="https://img-blog.csdnimg.cn/20200627162927673.PNG" alt></p>
+<h3 id="2-6-交互式布局"><a href="#2-6-交互式布局" class="headerlink" title="2.6 交互式布局"></a>2.6 交互式布局</h3><p>通过交互式布局，是我们高效的完成元器件在 PCB 上布局的关键步骤。操作如下：</p>
+<p>（1）在 PCB Editor 中选择 Move 命令；</p>
+<p>（2）回到 Orcad 选择要分离模块电路；</p>
+<p>（3）PCB Editor ，我们发现原理图中选中的器件已经被选择了，然后鼠标拖动，即可分离出模块电路，如下图;</p>
+<p><img src="https://img-blog.csdnimg.cn/20200627163835476.png" alt></p>
+<p>补充：对于多张原理图设计，也可以在原理图中每张图纸设置一个 room 编号，这样在 PCB 中放置的时候，首先绘制出 room 区域，导入的时候，就可以把器件放置到对应的 room 框中。</p>
+<h3 id="2-7-器件与板框之间的定位"><a href="#2-7-器件与板框之间的定位" class="headerlink" title="2.7 器件与板框之间的定位"></a>2.7 器件与板框之间的定位</h3><p>我们先选择器件对应的引脚或者定位孔，然后确定板框定位孔的坐标，使用 Move 操作通过坐标放到对应的位置，选择的对象为 Pins 。</p>
+<p><img src="https://img-blog.csdnimg.cn/20200627170611616.png" alt></p>
+<hr>
+<p>至此，我们就基本完成了 Orcad 到 allegro的操作。</p>
 <hr>
 <h1 id="欢迎关注公众号：【千艺千寻】，共同成长"><a href="#欢迎关注公众号：【千艺千寻】，共同成长" class="headerlink" title="欢迎关注公众号：【千艺千寻】，共同成长"></a><strong>欢迎关注公众号：【千艺千寻】，共同成长</strong></h1><p><img src="/images/%E6%9C%AB%E6%A0%8F.png" alt></p>
 
@@ -870,9 +732,9 @@
             <br/>
             <span xmlns:dct="http://purl.org/dc/terms/" href="http://purl.org/dc/dcmitype/Text"
                   property="dct:title" rel="dct:type">
-                    《MOS管（三极管）——一些常用的硬件设计电路分析》
+                    《Allegro专题【5】——Orcad to PCB Editor》
                 </span> 由
-            <a xmlns:cc="http://creativecommons.org/ns#" href="/2022/11/21/mos-guan-san-ji-guan-yi-xie-chang-yong-de-ying-jian-she-ji-dian-lu-fen-xi/" property="cc:attributionName"
+            <a xmlns:cc="http://creativecommons.org/ns#" href="/2020/06/27/allegro-zhuan-ti-5-orcad-to-pcb-editor/" property="cc:attributionName"
                rel="cc:attributionURL">
                 霁风
             </a> 采用
@@ -913,7 +775,7 @@
         repo: 'lovewinds13.github.io',
         owner: 'lovewinds13',
         admin: "lovewinds13",
-        id: '2022/11/21/mos-guan-san-ji-guan-yi-xie-chang-yong-de-ying-jian-she-ji-dian-lu-fen-xi/',
+        id: '2020/06/27/allegro-zhuan-ti-5-orcad-to-pcb-editor/',
         distractionFreeMode: false  // Facebook-like distraction free mode
     });
 
@@ -1196,30 +1058,30 @@
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="fa fa-dot-circle-o"></i>&nbsp;本篇
-            </div>
+                <i class="fa fa-chevron-left"></i>&nbsp;上一篇</div>
             <div class="card">
-                <a href="/2022/11/21/mos-guan-san-ji-guan-yi-xie-chang-yong-de-ying-jian-she-ji-dian-lu-fen-xi/">
+                <a href="/2020/07/30/xin-hao-wan-zheng-xing-zhuan-ti-1-dian-yuan-wan-zheng-xing-pi/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/1.jpg" class="responsive-img" alt="MOS管（三极管）——一些常用的硬件设计电路分析">
+                        <img src="/medias/featureimages/3.jpg" class="responsive-img" alt="信号完整性专题【1】——电源完整性（PI）">
                         
-                        <span class="card-title">MOS管（三极管）——一些常用的硬件设计电路分析</span>
+                        <span class="card-title">信号完整性专题【1】——电源完整性（PI）</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            Mos管,电路设计
+                            1. 概述电源完整性： 如何保证电源分配系统（Power Distribution Network—— PDN）满足负载芯片对电源的要求，即为电源完整性。
+解释一下，即电源调整系统为各部分电路提供稳定正确的工作电压，使系统的各部分能在负载电
                         
                     </div>
                     <div class="publish-info">
-                            <span class="publish-date">
-                                <i class="fa fa-clock-o fa-fw icon-date"></i>2022-11-21
-                            </span>
+                        <span class="publish-date">
+                            <i class="fa fa-clock-o fa-fw icon-date"></i>2020-07-30
+                        </span>
                         <span class="publish-author">
                             
                             <i class="fa fa-bookmark fa-fw icon-category"></i>
@@ -1232,7 +1094,18 @@
                         </span>
                     </div>
                 </div>
-
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/电源完整性-PI/" target="_blank">
+                        <span class="chip bg-color">电源完整性(PI)</span>
+                    </a>
+                    
+                    <a href="/tags/信号完整性/" target="_blank">
+                        <span class="chip bg-color">信号完整性</span>
+                    </a>
+                    
+                </div>
                 
             </div>
         </div>
@@ -1243,32 +1116,32 @@
                 下一篇&nbsp;<i class="fa fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2022/11/21/shen-du-xue-xi-xi-lie-1-pytorch-tu-xiang-fen-lei-lenet/">
+                <a href="/2020/02/18/usb-zong-xian-zhuan-ti-wu-mass-storage-she-bei-xiang-guan-zhi-shi/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/19.jpg" class="responsive-img" alt="深度学习系列1——Pytorch 图像分类(LeNet)">
+                        <img src="/medias/featureimages/20.jpg" class="responsive-img" alt="USB总线专题（五）——Mass storage 设备相关知识">
                         
-                        <span class="card-title">深度学习系列1——Pytorch 图像分类(LeNet)</span>
+                        <span class="card-title">USB总线专题（五）——Mass storage 设备相关知识</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            1. 概述本文主要是参照 B 站 UP 主 霹雳吧啦Wz 的视频学习笔记，参考的相关资料在文末参照栏给出，包括实现代码和文中用的一些图片。
-整个工程已经上传个人的 github https://github.com/lovewinds13/
+                            
+1. SCSI 协议定义小型计算机系统接口（SCSI，Small Computer System Interface）：是一种用于计算机及其周边设备之间（硬盘、软驱、光驱、打印机、扫描仪等）系统级接口的独立处理器标准。SCSI 标准定义命
                         
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="fa fa-clock-o fa-fw icon-date"></i>2022-11-21
+                                <i class="fa fa-clock-o fa-fw icon-date"></i>2020-02-18
                             </span>
                         <span class="publish-author">
                             
                             <i class="fa fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/DeepLearning/" class="post-category" target="_blank">
-                                    DeepLearning
+                            <a href="/categories/USB-通信/" class="post-category" target="_blank">
+                                    USB 通信
                                 </a>
                             
                             
@@ -1278,16 +1151,16 @@
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/DeepLearning/" target="_blank">
-                        <span class="chip bg-color">DeepLearning</span>
+                    <a href="/tags/USB/" target="_blank">
+                        <span class="chip bg-color">USB</span>
                     </a>
                     
-                    <a href="/tags/LeNet/" target="_blank">
-                        <span class="chip bg-color">LeNet</span>
+                    <a href="/tags/Mass-Storage/" target="_blank">
+                        <span class="chip bg-color">Mass Storage</span>
                     </a>
                     
-                    <a href="/tags/Pytorch/" target="_blank">
-                        <span class="chip bg-color">Pytorch</span>
+                    <a href="/tags/通信协议/" target="_blank">
+                        <span class="chip bg-color">通信协议</span>
                     </a>
                     
                 </div>
