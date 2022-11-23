@@ -4,12 +4,12 @@
 
 <head><meta name="generator" content="Hexo 3.9.0">
     <meta charset="utf-8">
-    <meta name="keywords" content="Keil使用总结（一）——拷贝调试中内存数据到文本文件, Hardware  DeepLearning  霁风 lovewinds13 嵌入式 深度学习 千艺千寻">
+    <meta name="keywords" content="STM32学习笔记一一HEX文件和BIN文件格式, Hardware  DeepLearning  霁风 lovewinds13 嵌入式 深度学习 千艺千寻">
     <meta name="baidu-site-verification" content="fmlEuI34ir">
     <meta name="google-site-verification" content="yCy2azpds5XSuGZvis6OuA-XIGF5GuGpYRAaGfD6o48">
     <meta name="360-site-verification" content="b7c11a830ef90fd1464ad6206bb7b6e7">
-    <meta name="description" content="1. 简介我们在调试过程中，不免需要查看从一些设备（比如：传感器，采集器等设备）读取的数据，在使用 Keil 调试的时候，就可以从 Memory 窗口将数据保存到计算机本地，对应进行分析。
-2. 步骤2.1 打开 Command  窗口在调">
+    <meta name="description" content="1. 引言今天看串口的 IAP ，平时我们通过 JTAG 等工具下载的都是 HEX 文件，都没有思考一下 HEX 的文件组成。而串口 IAP 下载的是 BIN 文件，刚好在这里区分学习一下。
+我们平时烧写 HEX 文件是不需要设置地址信息的">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -17,7 +17,7 @@
     <meta name="format-detection" content="telephone=no">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <title>Keil使用总结（一）——拷贝调试中内存数据到文本文件 | 霁风的博客</title>
+    <title>STM32学习笔记一一HEX文件和BIN文件格式 | 霁风的博客</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/font-awesome.min.css">
@@ -330,13 +330,13 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/1.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/27.jpg')">
     <div class="container">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
                     <div class="description center-align post-title">
-                        Keil使用总结（一）——拷贝调试中内存数据到文本文件
+                        STM32学习笔记一一HEX文件和BIN文件格式
                     </div>
                 </div>
             </div>
@@ -447,12 +447,20 @@
                     
                     <div class="article-tag">
                         
-                        <a href="/tags/Tools/" target="_blank">
-                            <span class="chip bg-color">Tools</span>
+                        <a href="/tags/HEX/" target="_blank">
+                            <span class="chip bg-color">HEX</span>
                         </a>
                         
-                        <a href="/tags/Keil/" target="_blank">
-                            <span class="chip bg-color">Keil</span>
+                        <a href="/tags/BIN/" target="_blank">
+                            <span class="chip bg-color">BIN</span>
+                        </a>
+                        
+                        <a href="/tags/Debug/" target="_blank">
+                            <span class="chip bg-color">Debug</span>
+                        </a>
+                        
+                        <a href="/tags/通信协议/" target="_blank">
+                            <span class="chip bg-color">通信协议</span>
                         </a>
                         
                     </div>
@@ -463,8 +471,8 @@
                     <div class="post-cate">
                         <i class="fa fa-bookmark fa-fw icon-category"></i>
                         
-                        <a href="/categories/嵌入式/" class="post-category" target="_blank">
-                            嵌入式
+                        <a href="/categories/STM32/" class="post-category" target="_blank">
+                            STM32
                         </a>
                         
                     </div>
@@ -475,7 +483,7 @@
             <div class="post-info">
                 <div class="post-date info-break-policy">
                     <i class="fa fa-calendar-minus-o fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2020-01-14
+                    2019-08-11
                 </div>
 
                 <div class="post-author info-break-policy">
@@ -489,14 +497,14 @@
                 
                 <div class="info-break-policy">
                     <i class="fa fa-file-word-o fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    347
+                    729
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="fa fa-clock-o fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    1 分
+                    2 分
                 </div>
                 
                 
@@ -512,48 +520,37 @@
         <hr class="clearfix">
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h2 id="1-简介"><a href="#1-简介" class="headerlink" title="1. 简介"></a>1. 简介</h2><p>我们在调试过程中，不免需要查看从一些设备（比如：传感器，采集器等设备）读取的数据，在使用 Keil 调试的时候，就可以从 Memory 窗口将数据保存到计算机本地，对应进行分析。</p>
-<h2 id="2-步骤"><a href="#2-步骤" class="headerlink" title="2. 步骤"></a>2. 步骤</h2><h3 id="2-1-打开-Command-窗口"><a href="#2-1-打开-Command-窗口" class="headerlink" title="2.1 打开 Command  窗口"></a>2.1 打开 Command  窗口</h3><p>在调试状态下，如下图所示，打开 Command Window 项目栏：</p>
-<p><img src="https://img-blog.csdnimg.cn/20200114193412724.png" alt></p>
-<h3 id="2-2-打开-Memory-窗口"><a href="#2-2-打开-Memory-窗口" class="headerlink" title="2.2 打开 Memory  窗口"></a>2.2 打开 Memory  窗口</h3><p>打开 Memory Window 项目栏，输入将要查看的变量地址，如下图：</p>
-<p><img src="https://img-blog.csdnimg.cn/20200114193537576.png" alt></p>
-<p>此处仅作为举例，有效数据为红框部分。</p>
-<h3 id="2-3-保存数据"><a href="#2-3-保存数据" class="headerlink" title="2.3 保存数据"></a>2.3 保存数据</h3><p>如下图所示，在 Command Window 输入：SAVE E:\Debug\DATA.txt 0x20004A18,0x20004A3A。</p>
-<p><img src="https://img-blog.csdnimg.cn/20200114193736736.png" alt><br>回车确认，及可在对应的目录下找到保存的数据文件.</p>
-<p><img src="https://img-blog.csdnimg.cn/20200114194753575.png" alt></p>
-<p>命令字段介绍：</p>
-<table>
-<thead>
-<tr>
-<th align="center">标识</th>
-<th align="center">解释</th>
-</tr>
-</thead>
-<tbody><tr>
-<td align="center">SAVE</td>
-<td align="center">操作命令</td>
-</tr>
-<tr>
-<td align="center">E:\Debug</td>
-<td align="center">保存的路径</td>
-</tr>
-<tr>
-<td align="center">DATA.txt</td>
-<td align="center">保存的文件名</td>
-</tr>
-<tr>
-<td align="center">0x20004A18,0x20004A3A</td>
-<td align="center">数据所在的地址范围</td>
-</tr>
-</tbody></table>
-<h3 id="2-4-数据格式"><a href="#2-4-数据格式" class="headerlink" title="2.4 数据格式"></a>2.4 数据格式</h3><p>打开保存的数据，如下图所示，红框为提取的数据。</p>
-<p><img src="https://img-blog.csdnimg.cn/20200114194858444.png" alt></p>
-<p>数据格式为 hex 格式，需要掐头去尾，才能得到最终的数据，如下图：</p>
-<p><img src="https://img-blog.csdnimg.cn/20200114195021841.png" alt></p>
-<p>如上，就完成一次数据的复制保存。</p>
-<p>关于 hex 文件与 bin 文件的区别，请参考<a href="https://blog.csdn.net/wwt18811707971/article/details/83758560" target="_blank" rel="noopener">STM32学习笔记一一HEX文件和BIN文件格式</a>此文，此处不再赘述。</p>
+                <h2 id="1-引言"><a href="#1-引言" class="headerlink" title="1. 引言"></a>1. 引言</h2><p>今天看串口的 IAP ，平时我们通过 JTAG 等工具下载的都是 HEX 文件，都没有思考一下 HEX 的文件组成。而串口 IAP 下载的是 BIN 文件，刚好在这里区分学习一下。</p>
+<p>我们平时烧写 HEX 文件是不需要设置地址信息的，因为已经包含在文件里面，而使用 BIN 烧写，需要在程序中指定地址。</p>
+<p><img src="https://img-blog.csdnimg.cn/20181106112107739.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3d3dDE4ODExNzA3OTcx,size_16,color_FFFFFF,t_70" alt></p>
+<h2 id="2-简述"><a href="#2-简述" class="headerlink" title="2. 简述"></a>2. 简述</h2><p>Intel hex 文件是记录文本行的 ASCII 文本文件，在 Intel HEX 文件中，每一行是一个 HEX 记录，由十六进制数组成的机器码或者数据常量。Intel HEX 文件经常被用于将程序或数据传输存储到 ROM、EPROM，大多数编程器和模拟器使用Intel HEX文件。</p>
+<h4 id="2-1-HEX文件"><a href="#2-1-HEX文件" class="headerlink" title="2.1 HEX文件"></a>2.1 HEX文件</h4><p>HEX 文件是<strong>包括地址信息的，而BIN文件格式只包括了数据本身</strong>。在烧写或下载HEX文件的时候，一般都不需要用户指定地址，因为HEX文件内部的信息已经包括了地址。而烧写BIN文件的时候，用户是一定需要指定地址信息的。</p>
+<h4 id="2-2-BIN文件"><a href="#2-2-BIN文件" class="headerlink" title="2.2 BIN文件"></a>2.2 BIN文件</h4><p> 对二进制文件而言，其实没有”格式”。文件只是包括了纯粹的二进制数据。</p>
+<h4 id="2-3-HEX文件格式"><a href="#2-3-HEX文件格式" class="headerlink" title="2.3 HEX文件格式"></a>2.3 HEX文件格式</h4><p> HEX文件都是由记录（RECORD）组成的。在HEX文件里面，每一行代表一个记录。记录的基本格式为：</p>
+<p><img src="https://img-blog.csdnimg.cn/2018110610362726.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3d3dDE4ODExNzA3OTcx,size_16,color_FFFFFF,t_70" alt></p>
+<p>RECTYP类型：</p>
+<p><img src="https://img-blog.csdnimg.cn/20181106104549605.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3d3dDE4ODExNzA3OTcx,size_16,color_FFFFFF,t_70" alt></p>
+<p>eg:</p>
+<p><img src="https://img-blog.csdnimg.cn/20181106104238796.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3d3dDE4ODExNzA3OTcx,size_16,color_FFFFFF,t_70" alt></p>
+<p>第一条：</p>
+<p>RECLEN：02；OFFSET：0000；RECTYP：04；INFO or DATA：0000；CHKUSM：FA</p>
+<p>第二条：</p>
+<p>RECLEN：10；OFFSET：0000；RECTYP：00；INFO or DATA：982100203501000021920000A5920000；CHKUSM：F7</p>
+<p>以此类推</p>
+<p><img src="https://img-blog.csdnimg.cn/20181106105053464.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3d3dDE4ODExNzA3OTcx,size_16,color_FFFFFF,t_70" alt></p>
+<p><strong>最后一条，表示文件末尾：:00000001FF</strong></p>
+<h4 id="2-4-BIN文件格式"><a href="#2-4-BIN文件格式" class="headerlink" title="2.4 BIN文件格式"></a>2.4 BIN文件格式</h4><p><img src="https://img-blog.csdnimg.cn/20181106105336517.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3d3dDE4ODExNzA3OTcx,size_16,color_FFFFFF,t_70" alt></p>
+<p>可以看到，BIN文件的数据与 HEX 格式数据的数据段是一一对应的。</p>
+<h4 id="2-5-HEX与BIN文件的大小"><a href="#2-5-HEX与BIN文件的大小" class="headerlink" title="2.5 HEX与BIN文件的大小"></a>2.5 HEX与BIN文件的大小</h4><p>HEX 文件是用 ASCII 来表示二进制的数值。<br>例如：一般 8BIT 的二进制数值0x3F，用ASCII来表示就需要分别表示字符’3’ 和字符’F’，每个字符需要一个BYTE，所以HEX文件需要 &gt; 2倍的空间。</p>
+<p>对一个BIN文件而言，文件的大小就是文件包括的数据的实际大小。而对HEX文件而言，看到的文件大小并不是实际的数据的大小：一是因为HEX文件是用ASCII来表示数据，二是因为HEX文件本身还包括别的附加信息。</p>
+<h4 id="2-6-校验和计算"><a href="#2-6-校验和计算" class="headerlink" title="2.6 校验和计算"></a>2.6 校验和计算</h4><p>计算从(0x3a–”:”)以后的所有各字节的和模256的余。即各字节二进制算术和，不计超过256的溢出值，然后用0x100减去这个算数累加和，得出的值就是此行校验码。</p>
+<p>eg：04000005000000C92E<br>0x100-(04+00+00+05+00+00+00+C9) = 2E</p>
 <hr>
 <h1 id="欢迎关注公众号：【千艺千寻】，共同成长"><a href="#欢迎关注公众号：【千艺千寻】，共同成长" class="headerlink" title="欢迎关注公众号：【千艺千寻】，共同成长"></a><strong>欢迎关注公众号：【千艺千寻】，共同成长</strong></h1><p><img src="/images/%E6%9C%AB%E6%A0%8F.png" alt></p>
+<hr>
+<p><strong>参考：</strong></p>
+<p>1.<a href="http://www.cnblogs.com/skullboyer/p/7978189.html" target="_blank" rel="noopener">hex和bin文件格式的区别</a></p>
+<p>2.<a href="http://www.openedv.com/forum.php?mod=viewthread&tid=7621&highlight=bin%2Bhex" target="_blank" rel="noopener">HEX文件和BIN文件格式的区别</a></p>
 
             </div>
             <hr />
@@ -712,9 +709,9 @@
             <br/>
             <span xmlns:dct="http://purl.org/dc/terms/" href="http://purl.org/dc/dcmitype/Text"
                   property="dct:title" rel="dct:type">
-                    《Keil使用总结（一）——拷贝调试中内存数据到文本文件》
+                    《STM32学习笔记一一HEX文件和BIN文件格式》
                 </span> 由
-            <a xmlns:cc="http://creativecommons.org/ns#" href="/2020/01/14/keil-shi-yong-zong-jie-yi-kao-bei-diao-shi-zhong-nei-cun-shu-ju-dao-wen-ben-wen-jian/" property="cc:attributionName"
+            <a xmlns:cc="http://creativecommons.org/ns#" href="/2019/08/11/stm32-xue-xi-bi-ji-yi-yi-hex-wen-jian-he-bin-wen-jian-ge-shi/" property="cc:attributionName"
                rel="cc:attributionURL">
                 霁风
             </a> 采用
@@ -755,7 +752,7 @@
         repo: 'lovewinds13.github.io',
         owner: 'lovewinds13',
         admin: "lovewinds13",
-        id: '2020/01/14/keil-shi-yong-zong-jie-yi-kao-bei-diao-shi-zhong-nei-cun-shu-ju-dao-wen-ben-wen-jian/',
+        id: '2019/08/11/stm32-xue-xi-bi-ji-yi-yi-hex-wen-jian-he-bin-wen-jian-ge-shi/',
         distractionFreeMode: false  // Facebook-like distraction free mode
     });
 
@@ -1042,25 +1039,26 @@
             <div class="article-badge left-badge text-color">
                 <i class="fa fa-chevron-left"></i>&nbsp;上一篇</div>
             <div class="card">
-                <a href="/2020/02/18/usb-zong-xian-zhuan-ti-wu-mass-storage-she-bei-xiang-guan-zhi-shi/">
+                <a href="/2019/09/06/usb-zong-xian-zhuan-ti-si-mei-ju-guo-cheng/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/20.jpg" class="responsive-img" alt="USB总线专题（五）——Mass storage 设备相关知识">
+                        <img src="/medias/featureimages/10.jpg" class="responsive-img" alt="USB总线专题（四）——枚举过程">
                         
-                        <span class="card-title">USB总线专题（五）——Mass storage 设备相关知识</span>
+                        <span class="card-title">USB总线专题（四）——枚举过程</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
                             
-1. SCSI 协议定义小型计算机系统接口（SCSI，Small Computer System Interface）：是一种用于计算机及其周边设备之间（硬盘、软驱、光驱、打印机、扫描仪等）系统级接口的独立处理器标准。SCSI 标准定义命
+1. 定义 枚举就是从设备读取一些信息，知道设备是什么样的设备，如何进行通信，这样主机就可以根据这些信息来加载合适的驱动程序。枚举过程包括设备地址的分配，从设备读取设备描述符，分配加载驱动程序，选择规定的设备功耗要求和接口配置信息。
+US
                         
                     </div>
                     <div class="publish-info">
                         <span class="publish-date">
-                            <i class="fa fa-clock-o fa-fw icon-date"></i>2020-02-18
+                            <i class="fa fa-clock-o fa-fw icon-date"></i>2019-09-06
                         </span>
                         <span class="publish-author">
                             
@@ -1097,53 +1095,59 @@
         
         <div class="article col s12 m6" data-aos="fade-up">
             <div class="article-badge right-badge text-color">
-                下一篇&nbsp;<i class="fa fa-chevron-right"></i>
+                本篇&nbsp;<i class="fa fa-dot-circle-o"></i>
             </div>
             <div class="card">
-                <a href="/2019/09/11/usb-zong-xian-zhuan-ti-san-miao-shu-fu/">
+                <a href="/2019/08/11/stm32-xue-xi-bi-ji-yi-yi-hex-wen-jian-he-bin-wen-jian-ge-shi/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/10.jpg" class="responsive-img" alt="USB总线专题（四）——枚举过程">
+                        <img src="/medias/featureimages/27.jpg" class="responsive-img" alt="STM32学习笔记一一HEX文件和BIN文件格式">
                         
-                        <span class="card-title">USB总线专题（四）——枚举过程</span>
+                        <span class="card-title">STM32学习笔记一一HEX文件和BIN文件格式</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            1. 概述USB 描述符信息存储在 USB 设备中，在枚举过程中，USB 主机会向 USB 设备发送 GetDescriptor 请求，USB 设备在收到这个请求之后，会将 USB 描述符信息返回给 USB 主机，USB 主机分析返回来的数
+                            1. 引言今天看串口的 IAP ，平时我们通过 JTAG 等工具下载的都是 HEX 文件，都没有思考一下 HEX 的文件组成。而串口 IAP 下载的是 BIN 文件，刚好在这里区分学习一下。
+我们平时烧写 HEX 文件是不需要设置地址信息的
                         
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="fa fa-clock-o fa-fw icon-date"></i>2019-09-11
+                                <i class="fa fa-clock-o fa-fw icon-date"></i>2019-08-11
                             </span>
                         <span class="publish-author">
                             
                             <i class="fa fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/USB-通信/" class="post-category" target="_blank">
-                                    USB 通信
+                            <a href="/categories/STM32/" class="post-category" target="_blank">
+                                    STM32
                                 </a>
                             
                             
                         </span>
                     </div>
                 </div>
+
                 
                 <div class="card-action article-tags">
                     
+                    <a href="/tags/HEX/" target="_blank">
+                        <span class="chip bg-color">HEX</span>
+                    </a>
+                    
+                    <a href="/tags/BIN/" target="_blank">
+                        <span class="chip bg-color">BIN</span>
+                    </a>
+                    
+                    <a href="/tags/Debug/" target="_blank">
+                        <span class="chip bg-color">Debug</span>
+                    </a>
+                    
                     <a href="/tags/通信协议/" target="_blank">
                         <span class="chip bg-color">通信协议</span>
-                    </a>
-                    
-                    <a href="/tags/USB/" target="_blank">
-                        <span class="chip bg-color">USB</span>
-                    </a>
-                    
-                    <a href="/tags/Mass-Storage/" target="_blank">
-                        <span class="chip bg-color">Mass Storage</span>
                     </a>
                     
                 </div>
