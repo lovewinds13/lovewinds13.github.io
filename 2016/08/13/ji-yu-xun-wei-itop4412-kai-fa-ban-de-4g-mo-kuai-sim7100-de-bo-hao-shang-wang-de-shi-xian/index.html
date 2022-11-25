@@ -4,11 +4,12 @@
 
 <head><meta name="generator" content="Hexo 3.9.0">
     <meta charset="utf-8">
-    <meta name="keywords" content="USB总线专题（四）——枚举过程, Hardware  DeepLearning  霁风 lovewinds13 嵌入式 深度学习 千艺千寻">
+    <meta name="keywords" content="基于迅为itop4412开发板的4G模块SIM7100的拨号上网的实现, Hardware  DeepLearning  霁风 lovewinds13 嵌入式 深度学习 千艺千寻">
     <meta name="baidu-site-verification" content="fmlEuI34ir">
     <meta name="google-site-verification" content="yCy2azpds5XSuGZvis6OuA-XIGF5GuGpYRAaGfD6o48">
     <meta name="360-site-verification" content="b7c11a830ef90fd1464ad6206bb7b6e7">
-    <meta name="description" content="1. 概述USB 描述符信息存储在 USB 设备中，在枚举过程中，USB 主机会向 USB 设备发送 GetDescriptor 请求，USB 设备在收到这个请求之后，会将 USB 描述符信息返回给 USB 主机，USB 主机分析返回来的数">
+    <meta name="description" content="一、实验目的：    实现4G模块sim7100在Linux系统上的拨号上网。
+二、实验平台：开发板：迅为4412精英版；4G模块：SIM7100开发板。SIM7100C带有USB口和串口，考虑速率等问题，采用USB接口与开发板相连接。我的">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -16,7 +17,7 @@
     <meta name="format-detection" content="telephone=no">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <title>USB总线专题（四）——枚举过程 | 霁风的博客</title>
+    <title>基于迅为itop4412开发板的4G模块SIM7100的拨号上网的实现 | 霁风的博客</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/font-awesome.min.css">
@@ -329,13 +330,13 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/12.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/16.jpg')">
     <div class="container">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
                     <div class="description center-align post-title">
-                        USB总线专题（四）——枚举过程
+                        基于迅为itop4412开发板的4G模块SIM7100的拨号上网的实现
                     </div>
                 </div>
             </div>
@@ -446,16 +447,16 @@
                     
                     <div class="article-tag">
                         
-                        <a href="/tags/通信协议/" target="_blank">
-                            <span class="chip bg-color">通信协议</span>
+                        <a href="/tags/Linux/" target="_blank">
+                            <span class="chip bg-color">Linux</span>
                         </a>
                         
-                        <a href="/tags/USB/" target="_blank">
-                            <span class="chip bg-color">USB</span>
+                        <a href="/tags/SIM7100/" target="_blank">
+                            <span class="chip bg-color">SIM7100</span>
                         </a>
                         
-                        <a href="/tags/Mass-Storage/" target="_blank">
-                            <span class="chip bg-color">Mass Storage</span>
+                        <a href="/tags/itop4412/" target="_blank">
+                            <span class="chip bg-color">itop4412</span>
                         </a>
                         
                     </div>
@@ -466,8 +467,8 @@
                     <div class="post-cate">
                         <i class="fa fa-bookmark fa-fw icon-category"></i>
                         
-                        <a href="/categories/USB-通信/" class="post-category" target="_blank">
-                            USB 通信
+                        <a href="/categories/Linux/" class="post-category" target="_blank">
+                            Linux
                         </a>
                         
                     </div>
@@ -478,7 +479,7 @@
             <div class="post-info">
                 <div class="post-date info-break-policy">
                     <i class="fa fa-calendar-minus-o fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2019-09-11
+                    2016-08-13
                 </div>
 
                 <div class="post-author info-break-policy">
@@ -492,14 +493,14 @@
                 
                 <div class="info-break-policy">
                     <i class="fa fa-file-word-o fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    4.3k
+                    1.7k
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="fa fa-clock-o fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    15 分
+                    7 分
                 </div>
                 
                 
@@ -515,434 +516,130 @@
         <hr class="clearfix">
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h2 id="1-概述"><a href="#1-概述" class="headerlink" title="1. 概述"></a>1. 概述</h2><p>USB 描述符信息存储在 USB 设备中，在枚举过程中，USB 主机会向 USB 设备发送 GetDescriptor 请求，USB 设备在收到这个请求之后，会将 USB 描述符信息返回给 USB 主机，USB 主机分析返回来的数据，判断出该设备是哪一种 USB 设备，建立相应的数据链接通道。</p>
-<p>USB 设备使用描述符报告其属性。描述符是具有定义格式的数据结构，每个描述符都以字节宽度字段开头，该字段包含描述符中的总字节数，后跟一个标识描述符类型的字节宽度字段。在 USB 设备枚举过程中，主机端的协义软件需要解析从 USB 设备读取的所有描述符信息。在 USB 主向设备发送读取描述符的请求后，USB 设备将所有的描述符以连续的数据流方式传输给 USB 主机。主机从第一个读到的字符开始，根据双方规定好的数据格式，顺序地解析读到的数据流。</p>
-<p>每个 USB 设备公开的设备描述符，指示设备的类信息、 供应商和产品标识符，以及多个配置。 每个配置还公开其配置描述符，该值指示大量接口和功耗特征。 每个接口公开其包含类和数量的终结点信息的替代设置的每个接口描述符。 每个接口中的每个终结点公开终结点，描述符可指明终结点类型和最大数据包大小。</p>
-<p>描述符类型：</p>
-<p><img src="https://img-blog.csdnimg.cn/20190829102956752.png" alt></p>
-<p>标准的 USB 设备有 5 种 USB 描述符：设备描述符（Device Descriptor)、配置描述符（Configuration Descriptor）、接口描述符（Interface Descriptor）、端点描述符（Endpoint Descriptor）和字符串描述符（String Descriptor）。描述符具有类似的格式，它们的第一个字段都是 bLength，第二个字段都是 bDescriptorType。七种描述符在使用时以 bDescriptorType 字段来区分。一设备至少要包含设备描述符、配置描述符和接口描述符，如果USB 设备没有端点描述符，则它仅仅用默认管道与主机进行数据传输。</p>
-<p>每个 USB 设备只有一个设备描述符，而一个设备中可包含一个或多个配置描述符，即 USB 设备可以有多种配置。设备的每一个配置中又可以包含一个或多个接口描述符，即 USB 设备可以支持多种功能（接口），接口的特性通过描述符提供。</p>
-<p><img src="https://img-blog.csdnimg.cn/20190829112936510.png" alt></p>
-<p>在 USB 主机访问 USB 设备的描述符时，USB 设备依照设备描述符、配置描述符、接口描述符、端点描述符、字符串描述符顺序将所有描述符传给主机。一设备至少要包含设备描述符、配置描述符和接口描述符，如果 USB 设备没有端点描述符，则它仅仅用默认管道与主机进行数据传输。</p>
-<h2 id="2-设备描述符"><a href="#2-设备描述符" class="headerlink" title="2. 设备描述符"></a>2. 设备描述符</h2><p>设备描述符描述的是设备的整体信息，与设备本身一一对应，包括对设备及在设备配置中起全程作用的信息，包括制造商标识号 ID、产品序列号、所属设备类号、默认端点的最大包长度和配置描述符的个数等。一个设备只能有一个设备描述符。在主机对 USB 设备枚举的过程中，首先要做的就是获取设备描述符，以对设备有一个整体的了解。</p>
-<p>设备描述符由14个字段组成，总长度18字节：</p>
-<pre class="line-numbers language-c"><code class="language-c"><span class="token keyword">typedef</span> <span class="token keyword">struct</span> _USB_DEVICE_DESCRIPTOR_
-<span class="token punctuation">{</span>
-    BYTE        bLength<span class="token punctuation">,</span>
-    BYTE        bDescriptorType<span class="token punctuation">,</span>
-    WORD        bcdUSB<span class="token punctuation">,</span>    <span class="token comment" spellcheck="true">//2字节</span>
-    BYTE        bDeviceClass<span class="token punctuation">,</span>
-    BTYE        bDeviceSubClass<span class="token punctuation">,</span>
-    BYTE        bDeviceProtol<span class="token punctuation">,</span>
-    BYTE        bMaxPacketSize0<span class="token punctuation">,</span>
-    WORD        idVenderI<span class="token punctuation">,</span>    <span class="token comment" spellcheck="true">//2字节</span>
-    WORD        idProduct<span class="token punctuation">,</span>    <span class="token comment" spellcheck="true">//2字节</span>
-    WORD        bcdDevice<span class="token punctuation">,</span>    <span class="token comment" spellcheck="true">//2字节</span>
-    BYTE        iManufacturer<span class="token punctuation">,</span>
-    BYTE        iProduct<span class="token punctuation">,</span>
-    BYTE        iSerialNumber<span class="token punctuation">,</span>
-    BYTE        iNumConfiguations
-<span class="token punctuation">}</span>USB_DEVICE_DESCRIPTOR<span class="token punctuation">;</span>
-
-<span class="token comment" spellcheck="true">/*
- b  一个字节，=8bits；
- w  两个字节，=16bits；
- bm  按位寻址；
- bcd 用BCD码表示；
- i   索引值
- id  标识码
-*/</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<p><strong>解释：</strong></p>
-<table>
-<thead>
-<tr>
-<th align="center">字段名</th>
-<th align="center">解释</th>
-</tr>
-</thead>
-<tbody><tr>
-<td align="center">bLength</td>
-<td align="center">描述符大小，固定为 0x12</td>
-</tr>
-<tr>
-<td align="center">bDescriptorType</td>
-<td align="center">设备描述符类型，固定为 0x01</td>
-</tr>
-<tr>
-<td align="center">bcdUSB</td>
-<td align="center">USB 规范发布号，表示了本设备能适用于那种协议，如 2.0=0200，1.1=0110 等</td>
-</tr>
-<tr>
-<td align="center">bDeviceClass</td>
-<td align="center">该设备所属的标准设备类，USB 协议中对常见的设备进行了分类。该字段值为 0x01～0xFE 时，表示是 USB 协议中已定义的设备类，常用的 HID 设备类编号为 0x03</td>
-</tr>
-<tr>
-<td align="center">bDeviceSubClass</td>
-<td align="center">子类型代码（由USB分配），如果 bDeviceClass 值是 0，一定要设置为 0．其它情况就跟据 USB-IF 组织定义的编码</td>
-</tr>
-<tr>
-<td align="center">bDeviceProtocol</td>
-<td align="center">协议代码（由USB分配），如果使用 USB-IF 组织定义的协议，就需要设置这里的值，否则直接设置为 0。如果厂商自己定义的可以设置为 FFH</td>
-</tr>
-<tr>
-<td align="center">bMaxPacketSize0</td>
-<td align="center">端点 ０ 最大分组大小（只有 8,16,32,64 有效）,对于低速 USB 设备，bMaxPacketSize0 为8；对于全速 USB 设备，bMaxPacketSize0 为 8、16、32、64；对于高速 USB 设备，bMaxPacketSize0 为 64。</td>
-</tr>
-<tr>
-<td align="center">idVendor</td>
-<td align="center">用于表示 USB 设备供应商的 ID。USB 组织中规定每种产品都必须包含一个供应商 ID,这样可以使主机加载合适的驱动程序。</td>
-</tr>
-<tr>
-<td align="center">idProduct</td>
-<td align="center">用于表示 USB 产品的 ID，由设备供应商提供。idProduct 用于表示特定的 USB 设备，在 USB 设备上电的时候可以帮助 USB 主机选择合适的驱动程序。</td>
-</tr>
-<tr>
-<td align="center">bcdDevice</td>
-<td align="center">用于表示 USB 设备的版本号，它以 BCD 码的形式表示。一般来说 bcdDevcie 由设备供应商指定，在 USB 设备上电的时候可以帮助 USB 主机选择合适的驱动程序。</td>
-</tr>
-<tr>
-<td align="center">iManufacturer</td>
-<td align="center">厂商描述符字符串索引．索引到对应的字符串描述符． 为 ０ 则表示没有</td>
-</tr>
-<tr>
-<td align="center">iProduct</td>
-<td align="center">产品描述符字符串索引</td>
-</tr>
-<tr>
-<td align="center">iSerialNumber</td>
-<td align="center">用于表示设备序列号字符串描述符的索引值，如果没有，可以置为 0</td>
-</tr>
-<tr>
-<td align="center">bNumConfigurations</td>
-<td align="center">用于表示该 USB 设备所支持的配置数。</td>
-</tr>
-</tbody></table>
-<p>一个 USB CCID 设备的描述符为：与上表中的字段是一一对应的。</p>
-<p><img src="https://img-blog.csdnimg.cn/20190829151855357.png" alt></p>
-<h2 id="3-配置描述符"><a href="#3-配置描述符" class="headerlink" title="3. 配置描述符"></a>3. 配置描述符</h2><p>配置描述符定义了设备的配置信息，一个设备可以有多个配置描述符。配置描述符中包括了描述符的长度（属于此描述符的所有接口描述符和端点描述符的长度的和）、供电方式（自供电/总线供电）、最大耗电量等。主机发出 USB 标准命令 Get_Descriptor 要求得到设备的某个配置描述符，那么除了此配置描述符以外，此配置包含的所有接口描述符与端点描述符都将提供给 USB 主机。</p>
-<p>一个 USB 设备可以有多种配置，不同的配置使设备工作在不同的状态下，每个配置必须有一个配置描述符。其格式包括 8 个字段，共 9 字节。</p>
-<pre class="line-numbers language-c"><code class="language-c"><span class="token keyword">typedef</span> <span class="token keyword">struct</span> _USB_CONFIGURATION_DESCRIPTOR_
-<span class="token punctuation">{</span>
-    BYTE      bLength<span class="token punctuation">,</span>
-    BYTE      bDescriptorType<span class="token punctuation">,</span>
-    WORD      wTotalLength<span class="token punctuation">,</span>
-    BYTE      bNumInterfaces<span class="token punctuation">,</span>
-    BYTE      bConfigurationValue<span class="token punctuation">,</span>
-    BYTE      iConfiguration<span class="token punctuation">,</span>
-    BYTE      bmAttributes<span class="token punctuation">,</span>
-    BYTE      bMaxPower
-<span class="token punctuation">}</span>USB_CONFIGURATION_DESCRIPTOR<span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<table>
-<thead>
-<tr>
-<th align="center">字段名</th>
-<th align="center">解释</th>
-</tr>
-</thead>
-<tbody><tr>
-<td align="center">bLength</td>
-<td align="center">配置描述符长度，配置描述符长度为 9 字节大小。</td>
-</tr>
-<tr>
-<td align="center">bDescriptorType</td>
-<td align="center">描述符类型，配置描述符类型为 0x02。</td>
-</tr>
-<tr>
-<td align="center">wTotalLength</td>
-<td align="center">配置描述符信息总的大小，包括接口描述符、端点描述符等。</td>
-</tr>
-<tr>
-<td align="center">bNumInterfaces</td>
-<td align="center">USB 接口数量。</td>
-</tr>
-<tr>
-<td align="center">bConfigurationValue</td>
-<td align="center">当使用 SetConfiguration 和 GetConfiguration 请求时所指定的配置索引值。</td>
-</tr>
-<tr>
-<td align="center">iConfiguration</td>
-<td align="center">描述配置的字符串描述符索引。</td>
-</tr>
-<tr>
-<td align="center">bmAttributes</td>
-<td align="center">供电配置，位详细定义如下：D7 保留，必须置1；D6 自供电模式；  D5 远程唤醒； D4～D0 保留</td>
-</tr>
-<tr>
-<td align="center">bMaxPower</td>
-<td align="center">最大功耗，以 2mA 为单位，例如 0x32 为 50*2 = 100mA。USB 设备可以从 USB 总线上获得最大的电流为 500mA，因此bMaxPower 字段的最大值可以设置为 250。</td>
-</tr>
-</tbody></table>
-<p>示例：</p>
-<p><img src="https://img-blog.csdnimg.cn/20190829154705634.png" alt> </p>
-<h2 id="4-接口描述符"><a href="#4-接口描述符" class="headerlink" title="4.接口描述符"></a>4.接口描述符</h2><p>如果一个配置描述符不止支持一个接口描述符，并且每个接口描述符都有一个或多个端点描述符，那么在响应 USB主机的配置描述符命令时，USB 设备的端点描述符总是紧跟着相关的接口描述符后面，作为配置描述符的一部分被返回。接口描述符不可直接用 Set_Descriptor 和 Get_Descriptor 来存取。若一个接口仅使用端点 0，则接口描述符以后就不再返回端点描述符，并且此接口表现的是一个控制接口的特性，它使用与端点 0 相关联的默认管道进行数据传输。在这种情况下 bNumberEndpoints 域应被设置成 0。接口描述符在说明端点个数并不把端点 0 计算在内。</p>
-<p>接口是端点的集合，负责完成 USB 的特定功能，例如：数据的输入输出。接口描述符用于描述一个接口，包含了接口的特性，如端点个数，所属设备类和子类等。它有 9 个字段，共 9 字节。</p>
-<pre class="line-numbers language-c"><code class="language-c"><span class="token keyword">typedef</span> <span class="token keyword">struct</span> _USB_INTERFACE_DESCRIPTOR_
-<span class="token punctuation">{</span>
-    BYTE      bLength<span class="token punctuation">,</span>
-    BYTE      bDescriptorType<span class="token punctuation">,</span>
-    BYTE      bInterfaceNumber<span class="token punctuation">,</span>
-    BYTE      bAlternateSetting<span class="token punctuation">,</span>
-    BYTE      bNumEndpoint<span class="token punctuation">,</span>
-    BYTE      bInterfaceClass<span class="token punctuation">,</span>
-    BYTE      bInterfaceSubClass<span class="token punctuation">,</span>
-    BYTE      bInterfaceProtocol<span class="token punctuation">,</span>
-    BYTE      iInterface
-<span class="token punctuation">}</span>USB_INTERFACE_DESCRIPTOR<span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<table>
-<thead>
-<tr>
-<th align="center">字段名</th>
-<th align="center">解释</th>
-</tr>
-</thead>
-<tbody><tr>
-<td align="center">bLength</td>
-<td align="center">描述符大小．固定为 0x09</td>
-</tr>
-<tr>
-<td align="center">bDescriptorType</td>
-<td align="center">接口描述符类型．固定为 0x04</td>
-</tr>
-<tr>
-<td align="center">bInterfaceNumber</td>
-<td align="center">该接口的编号，接口编号从 0 开始分配，当一个配置有多个接口时，就用该字段来区分不同的接口。</td>
-</tr>
-<tr>
-<td align="center">bAlternateSetting</td>
-<td align="center">用于为上一个字段选择可供替换的位置，即备用的接口描述符标号</td>
-</tr>
-<tr>
-<td align="center">bNumEndpoint</td>
-<td align="center">使用的端点数目．端点 ０ 除外，如果此值为 0 ，此接口仅仅只能被用为控制管道</td>
-</tr>
-<tr>
-<td align="center">bInterfaceClass</td>
-<td align="center">接口所属的类值： 零值为将来的标准保留，如果此域的值设为 FFH，则此接口类由厂商说明，所有其它的值由 USB 说明保留。</td>
-</tr>
-<tr>
-<td align="center">bInterfaceSubClass</td>
-<td align="center">子类码 ：这些值的定义视 bInterfaceClass 域而定。 如果 bInterfaceClass 域的值为零则此域的值必须为零。 bInterfaceClass 域不为 FFH 则所有值由 USB 所保留。</td>
-</tr>
-<tr>
-<td align="center">bInterfaceProtocol</td>
-<td align="center">协议码：bInterfaceClass 和 bInterfaceSubClass 域的值而定.如果一个接口支持设备类相关的请求此域的值指出了设备类说明中所定义的协议.</td>
-</tr>
-<tr>
-<td align="center">iInterface</td>
-<td align="center">描述此接口的字串描述表的索引值。</td>
-</tr>
-</tbody></table>
-<p>接口描述符返回示例：</p>
-<p><img src="https://img-blog.csdnimg.cn/20190829161236757.png" alt>对于 bInterfaceClass 字段，表示接口所属的类别，USB 协议根据功能将不同的接口划分成不的类，其具体含义如下表所示：</p>
-<table>
-<thead>
-<tr>
-<th align="center">值</th>
-<th align="center">类别</th>
-</tr>
-</thead>
-<tbody><tr>
-<td align="center">0x01</td>
-<td align="center">音频类</td>
-</tr>
-<tr>
-<td align="center">0x02</td>
-<td align="center">CDC控制类</td>
-</tr>
-<tr>
-<td align="center">0x03</td>
-<td align="center">人机接口类（HID）</td>
-</tr>
-<tr>
-<td align="center">0x05</td>
-<td align="center">物理类</td>
-</tr>
-<tr>
-<td align="center">0x06</td>
-<td align="center">图像类</td>
-</tr>
-<tr>
-<td align="center">0x07</td>
-<td align="center">打印机类</td>
-</tr>
-<tr>
-<td align="center">0x08</td>
-<td align="center">大数据存储类</td>
-</tr>
-<tr>
-<td align="center">0x09</td>
-<td align="center">集线器类</td>
-</tr>
-<tr>
-<td align="center">0x0A</td>
-<td align="center">CDC数据类</td>
-</tr>
-<tr>
-<td align="center">0x0B</td>
-<td align="center">智能卡类</td>
-</tr>
-<tr>
-<td align="center">0x0D</td>
-<td align="center">安全类</td>
-</tr>
-<tr>
-<td align="center">0xDC</td>
-<td align="center">诊断设备类</td>
-</tr>
-<tr>
-<td align="center">0xE0</td>
-<td align="center">无线控制器类</td>
-</tr>
-<tr>
-<td align="center">0xFE</td>
-<td align="center">特定应用类（包括红外的桥接器等）</td>
-</tr>
-<tr>
-<td align="center">0xFF</td>
-<td align="center">厂商定义的设备</td>
-</tr>
-</tbody></table>
-<h2 id="5-端点描述符"><a href="#5-端点描述符" class="headerlink" title="5.端点描述符"></a>5.端点描述符</h2><p>端点是设备与主机之间进行数据传输的逻辑接口，除配置使用的端点 0（控制端点，一般一个设备只有一个控制端点）为双向端口外，其它均为单向。端点描述符描述了数据的传输类型、传输方向、数据包大小和端点号（也可称为端点地址）等。</p>
-<p>除了描述符中描述的端点外，每个设备必须要有一个默认的控制型端点，地址为 0，它的数据传输为双向，而且没有专门的描述符，只是在设备描述符中定义了它的最大包长度。主机通过此端点向设备发送命令，获得设备的各种描述符的信息，并通过它来配置设备。</p>
-<p>USB 设备中的每个端点都有自己的端点描述符，由接口描述符中的 bNumEndpoint 决定其数量。</p>
-<pre class="line-numbers language-c"><code class="language-c"><span class="token keyword">typedef</span> <span class="token keyword">struct</span> _USB_ENDPOINT_DESCRIPTOR_
-<span class="token punctuation">{</span>
-    BYTE        bLength<span class="token punctuation">,</span>
-    BYTE        bDescriptorType<span class="token punctuation">,</span>
-    BYTE        bEndpointAddress<span class="token punctuation">,</span>
-    BYTE        bmAttributes<span class="token punctuation">,</span>
-    WORD        wMaxPacketSize<span class="token punctuation">,</span>
-    BYTE        bInterval
-<span class="token punctuation">}</span>USB_ENDPOINT_DESCRIPTOR<span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<table>
-<thead>
-<tr>
-<th align="center">字段名</th>
-<th align="center">解释</th>
-</tr>
-</thead>
-<tbody><tr>
-<td align="center">bLength</td>
-<td align="center">描述符大小．固定为 0x07。</td>
-</tr>
-<tr>
-<td align="center">bDescriptorType</td>
-<td align="center">接口描述符类型．固定为 0x05。</td>
-</tr>
-<tr>
-<td align="center">bEndpointAddress</td>
-<td align="center">此描述表所描述的端点的地址、方向： Bit 3..0 : 端点号；Bit 6..4 : 保留,为零 ；Bit 7:    方向，如果控制端点则略。 0：输出端点（主机到设备） ；1：输入端点（设备到主机）</td>
-</tr>
-<tr>
-<td align="center">bmAttributes</td>
-<td align="center">此域的值描述的是在 bConfigurationValue 域所指的配置下端点的特性。 Bit 1..0 :传送类型 （00=控制传送 ；01=同步传送 ；10=批量传送 ；11=中断传送 ，所有其它的位都保留。</td>
-</tr>
-<tr>
-<td align="center">wMaxPacketSize</td>
-<td align="center">当前配置下此端点能够接收或发送的最大数据包的大小。 对于实进传输，此值用于为每帧的数据净负荷预留时间。在实际运行时，管道可能不完全需要预留的带宽，实际带宽可由设备通过一种非 USB 定义的机制汇报给主机。对于中断传输，批量传输和控制传输，端点可能发送比之短的数据包</td>
-</tr>
-<tr>
-<td align="center">bInterval</td>
-<td align="center">周期数据传输端点的时间间隙。 此域的值对于批传送的端点及控制传送的端点无意义。对于同步传送的端点此域必需为 1，表示周期为 1ms。对于中断传送的端点此域值的范围为 1ms 到 255ms。</td>
-</tr>
-</tbody></table>
-<p>端点描述符实例，一个输入、一个输出：</p>
-<p><img src="https://img-blog.csdnimg.cn/20190829170423775.png" alt></p>
-<h2 id="6-字符串描述符"><a href="#6-字符串描述符" class="headerlink" title="6.字符串描述符"></a>6.字符串描述符</h2><p>字符串描述符是一种可选的 USB 标准描述符，描述了如制商、设备名称或序列号等信息。如果一个设备无字符串描述符，则其它描述符中与字符串有关的索引值都必须为 0。字符串使用的是 Unicode 编码。</p>
-<p>主机请示得到某个字符串描述符时一般分成两步：首先主机向设备发出 USB 标准命令 Get_Descriptor，其中所使用的字符串的索引值为 0，设备返回一个字符串描述符，此描述符的结构如下：</p>
-<p><img src="https://img-blog.csdnimg.cn/20190829173517215.png" alt>USB 设备中的字符串可能支持多种语言。请求字符串描述符时，请求者使用 USB-IF 定义的 16 位语ID（LANGID）指定所需的语言。所有语言的字符串索引零都返回一个字符串描述符，该描述符包含设备支持的双字节 LANGID 代码数组。上图表显示了 LANGID 代码数组。 USB 设备可以省略所有字符串描述符。省略所有字符串描述符的 USB 设备不得返回 LANGID 代码数组。</p>
-<p>LANGID 代码数组不以 NULL 结尾。通过从描述符的第一个字节的值中减去两个来计算数组的大小（以字节为单位）。</p>
-<p><strong>UNICODE字符串描述符：</strong></p>
-<pre class="line-numbers language-c"><code class="language-c"><span class="token keyword">typedef</span> <span class="token keyword">struct</span> _USB_STRING_DESCRIPTION_
-<span class="token punctuation">{</span>
-    BYTE      bLength<span class="token punctuation">,</span>
-    BYTE      bDescriptionType<span class="token punctuation">,</span>
-    BYTE      bString<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
-<span class="token punctuation">}</span>USB_STRING_DESCRIPTION<span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<table>
-<thead>
-<tr>
-<th align="center">字段名</th>
-<th align="center">解释</th>
-</tr>
-</thead>
-<tbody><tr>
-<td align="center">bLength</td>
-<td align="center">描述符大小．由整个字符串的长度加上 bLength 和 bDescriptorType 的长度决定（N+2）</td>
-</tr>
-<tr>
-<td align="center">bDescriptorType</td>
-<td align="center">接口描述符类型．固定为 0x03</td>
-</tr>
-<tr>
-<td align="center">bString</td>
-<td align="center">Unicode 编码字符串（长度为 N）</td>
-</tr>
-</tbody></table>
-<h2 id="7-设备限定描述符"><a href="#7-设备限定描述符" class="headerlink" title="7.设备限定描述符"></a>7.设备限定描述符</h2><p>device_qualifier 描述符描述了有关高速设备的信息，如果设备以其他速度运行，该设备将发生变化。如果设备当前正以全速运行，则 device_qualifier 将返回有关其如何以高速运行的信息。</p>
-<p>标准设备描述符的供应商，产品，设备，制造商，产品和序列号字段不包含在此描述符中，因为该信息对于所有支持的速度的设备是恒定的。 此描述符的版本号必须至少为2.0（0200H）。主机使用GetDescriptor（）请求访问此描述符。</p>
-<p>如果仅全速设备（设备描述符版本号等于0200H）收到对 device_qualifier 的 GetDescriptor（）请求，则它必须响应请求错误。 除非首先成功检索 device_qualifier 描述符，否则主机不得请求 other_speed_configuration 描述符。</p>
-<pre class="line-numbers language-C"><code class="language-C">
-struct USB_QUALIFIER_DESCRIPTOR
- {
-    BYTE  bLength;
-    BYTE  bDescriptorType;
-    WORD bcdUSB;
-    BYTE  bDeviceClass;
-    BYTE  bDeviceSubClass;
-    BYTE  bDeviceProtocol;
-    BYTE  bMaxPacketSize0;
-    BYTE  bNumConfigurations;
-    BYTE  bRESERVED;
-}<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<table>
-<thead>
-<tr>
-<th align="center">字段名</th>
-<th align="center">解释</th>
-</tr>
-</thead>
-<tbody><tr>
-<td align="center">bLength</td>
-<td align="center">设备限定描述符长度，10 个字节（0AH）</td>
-</tr>
-<tr>
-<td align="center">bDescriptorType</td>
-<td align="center">限定描述符类型，固定为 06H</td>
-</tr>
-<tr>
-<td align="center">bcdUSB</td>
-<td align="center">USB 设备及其描述符遵循的 USB 规范版本号，以 BCD 码形式表示，版本必须在  2.0 以上</td>
-</tr>
-<tr>
-<td align="center">bDeviceClass</td>
-<td align="center">USB 所属的设备类</td>
-</tr>
-<tr>
-<td align="center">bDeviceSubClass</td>
-<td align="center">USB 所属的设备子类，设备类再细分</td>
-</tr>
-<tr>
-<td align="center">bDeviceProtocol</td>
-<td align="center">协议代码（由USB分配），如果使用 USB-IF 组织定义的协议，就需要设置这里的值，否则直接设置为  0。如果厂商自己定义的可以设置为 FFH</td>
-</tr>
-<tr>
-<td align="center">bMaxPacketSize0</td>
-<td align="center">端点 ０ 最大分组大小（只有 8,16,32,64 有效）,对于低速 USB 设备，bMaxPacketSize0 为8；对于全速 USB 设备，bMaxPacketSize0 为 8、16、32、64；对于高速 USB 设备，bMaxPacketSize0 为 64。</td>
-</tr>
-<tr>
-<td align="center">bNumConfigurations</td>
-<td align="center">表示 USB 设备另一个速率所支持的配置数</td>
-</tr>
-<tr>
-<td align="center">bRESERVED</td>
-<td align="center">保留项，置0</td>
-</tr>
-</tbody></table>
-<p>注：此处针对 USB2.0 协议</p>
-<h1 id="欢迎关注公众号：【千艺千寻】，共同成长"><a href="#欢迎关注公众号：【千艺千寻】，共同成长" class="headerlink" title="欢迎关注公众号：【千艺千寻】，共同成长"></a><strong>欢迎关注公众号：【千艺千寻】，共同成长</strong></h1><p><img src="/images/%E6%9C%AB%E6%A0%8F.png" alt></p>
+                <h2 id="一、实验目的："><a href="#一、实验目的：" class="headerlink" title="一、实验目的："></a>一、实验目的：</h2><pre><code>    实现4G模块sim7100在Linux系统上的拨号上网。</code></pre><hr>
+<h2 id="二、实验平台："><a href="#二、实验平台：" class="headerlink" title="二、实验平台："></a>二、实验平台：</h2><p>开发板：迅为4412精英版；4G模块：SIM7100开发板。SIM7100C带有USB口和串口，考虑速率等问题，采用USB接口与开发板相连接。我的4412开发板运行的是Linux最小系统，我们需要向内核添加4G模块的驱动与PPP协议支持，然后在编译内核下载到开发板。</p>
 <hr>
-<h2 id="参考："><a href="#参考：" class="headerlink" title="参考："></a>参考：</h2><p>1.<a href="https://blog.csdn.net/qq_16777851/article/details/85222030" target="_blank" rel="noopener">从零开始学USB（十、USB的描述符）</a><br>2.<a href="https://blog.csdn.net/mcgrady_tracy/article/details/8129992" target="_blank" rel="noopener">USB描述符</a><br>3.<a href="https://blog.csdn.net/alien75/article/details/4622319" target="_blank" rel="noopener">USB描述符详解</a><br>4.<a href="http://usb.baiheee.com/usb_article/usb_spec/usb_cmd_desc.html" target="_blank" rel="noopener">USB命令请求及描述符详解（速查手册）</a><br>5.<a href="https://blog.csdn.net/wavemcu/article/details/7220697" target="_blank" rel="noopener">USB中的描述符详解 一</a><br>6.<a href="https://blog.csdn.net/yuesichiu/article/details/71266179" target="_blank" rel="noopener">USB请求和USB描述符</a><br>7.<a href="https://blog.csdn.net/qq_16777851/article/details/85222030" target="_blank" rel="noopener">从零开始学USB（十、USB的描述符）</a></p>
+<h2 id="三、实验流程"><a href="#三、实验流程" class="headerlink" title="三、实验流程"></a>三、实验流程</h2><h4 id="1、内核配置：源码目录，通过mkae-menuconfig进入配置。"><a href="#1、内核配置：源码目录，通过mkae-menuconfig进入配置。" class="headerlink" title="1、内核配置：源码目录，通过mkae menuconfig进入配置。"></a>1、内核配置：源码目录，通过mkae menuconfig进入配置。</h4><h6 id="（1）大容量存储驱动"><a href="#（1）大容量存储驱动" class="headerlink" title="（1）大容量存储驱动"></a>（1）大容量存储驱动</h6><p> Device Drivers &gt; USB support</p>
+<p>make ARCH=arm menuconfig配置USB驱动：</p>
+<p>&lt;*&gt;    USB Mass Storage support</p>
+<p>[*]      USB Mass Storage verbose debug</p>
+<p>&lt;*&gt;      Realtek Card Reader support</p>
+<p>[*]        Realtek Card Reader autosuspend support</p>
+<p>&lt;*&gt;      Datafab Compact Flash Reader support</p>
+<h6 id="（2）USB驱动"><a href="#（2）USB驱动" class="headerlink" title="（2）USB驱动"></a>（2）USB驱动</h6><blockquote>
+<p>Device Drivers &gt; USB support</p>
+</blockquote>
+<p>&lt;*&gt;  Inventra Highspeed Dual Role Controller (TI, ADI, …)   </p>
+<pre><code>        MUSB Mode Selection (Dual Role mode)  ---&gt;            
+
+&lt;*&gt;    Platform Glue Layer (TI DSPS platforms)  ---&gt;         
+
+    MUSB DMA mode (Disable DMA (always use PIO))  ---&gt;</code></pre><p>&lt;*&gt;  USB Serial Converter support  —&gt;</p>
+<p>[*]      USBGeneric Serial Driver </p>
+<p>&lt;*&gt;     USBdriver for GSM and CDMA modems</p>
+<h6 id="（3）PPP驱动"><a href="#（3）PPP驱动" class="headerlink" title="（3）PPP驱动"></a>（3）PPP驱动</h6><blockquote>
+<p>Device Drivers &gt; Network device support</p>
+</blockquote>
+<p>  &lt;*&gt;  PPP (point-to-point protocol) support         </p>
+<pre><code>&lt;*&gt;    PPP BSD-Compress compression                         
+
+&lt;*&gt;    PPP Deflate compression                             
+
+[*]    PPP filtering                                           
+
+&lt;*&gt;    PPP MPPE compression (encryption)                         
+
+ [*]    PPP multilink support                 
+
+&lt;*&gt;    PPP over Ethernet               
+
+&lt;*&gt;    PPP support for async serial ports   
+
+&lt;*&gt;    PPP support for sync tty ports     </code></pre><p>&lt;*&gt;  SLIP (serial line) support     </p>
+<p>[*]  CSLIP compressed headers</p>
+<p>全部添加进入内核后，使用make编译，编译出来的zImage烧写到开发板。（注：zImage目录：源码的arch/arm/boot/目录下）</p>
+<hr>
+<h4 id="2、交叉编译libusb"><a href="#2、交叉编译libusb" class="headerlink" title="2、交叉编译libusb"></a>2、交叉编译libusb</h4><pre><code>这部分为提供USB支持，这一部分我是参考下面的连接：</code></pre><p>[libusb交叉编译] (<a href="http://www.linuxidc.com/Linux/2016-03/129581.htm" target="_blank" rel="noopener">http://www.linuxidc.com/Linux/2016-03/129581.htm</a>)</p>
+<p>编译成功后，将生成的libusb-1.0.20和libusb-compat-0.1.5下的库文件(lib下的文件)复制到ARM板上的linux的/lib下面即可。（我这里是最小系统下的lib下如下图：（可以直接复制过去；也可以通过先放到最小系统的lib下，直接压缩到system.ing文件中，再下载到板子上）</p>
+<p><img src="https://imgconvert.csdnimg.cn/aHR0cDovL2ltZy5ibG9nLmNzZG4ubmV0LzIwMTYwODEzMTkxNjI2NTg2?x-oss-process=image/format,png" alt></p>
+<hr>
+<h4 id="3、交叉编译4G模块驱动：Gobiserial-ko"><a href="#3、交叉编译4G模块驱动：Gobiserial-ko" class="headerlink" title="3、交叉编译4G模块驱动：Gobiserial.ko"></a>3、交叉编译4G模块驱动：Gobiserial.ko</h4><p>我觉得这个驱动是很重要的，厂家提供的资料里竟然没有。最终在谷歌上找到了。亲测可用[下载连接]</p>
+<p> (<a href="http://www.reyax.com/httpdocs/index.files/4G_Module.htm" target="_blank" rel="noopener">http://www.reyax.com/httpdocs/index.files/4G_Module.htm</a>)</p>
+<p> 具体的操作为：将压缩包复制到ubuntu下，解压，</p>
+<p> <img src="https://imgconvert.csdnimg.cn/aHR0cDovL2ltZy5ibG9nLmNzZG4ubmV0LzIwMTYwODEzMTkyMzQxMDQy?x-oss-process=image/format,png" alt></p>
+<p> 进入到Gobiserial文件夹，把Makefile文件的源码目录替换为我们自己的（编我直接使用的是编译驱动写的），然后make</p>
+<p> <img src="https://imgconvert.csdnimg.cn/aHR0cDovL2ltZy5ibG9nLmNzZG4ubmV0LzIwMTYwODEzMTkyNTA4NzUy?x-oss-process=image/format,png" alt></p>
+<p> 就可以得到驱动文件Gobiserial.ko文件</p>
+<p> <img src="https://imgconvert.csdnimg.cn/aHR0cDovL2ltZy5ibG9nLmNzZG4ubmV0LzIwMTYwODEzMTkyNTM1NDg3?x-oss-process=image/format,png" alt></p>
+<p> 将此.ko文件拷贝到U盘或者开发板上均可。至此驱动方面的工作就完毕了！！！</p>
+<hr>
+<h4 id="4、加载驱动"><a href="#4、加载驱动" class="headerlink" title="4、加载驱动"></a>4、加载驱动</h4><p>我将Gobiserial.ko文件复制到了开发板的/bin/目录下</p>
+<p><img src="https://imgconvert.csdnimg.cn/aHR0cDovL2ltZy5ibG9nLmNzZG4ubmV0LzIwMTYwODEzMTkyNzU2NDc0?x-oss-process=image/format,png" alt></p>
+<p>通过加载驱动的命令:insmod Gobiserial.ko 将驱动插入到内核中</p>
+<p><img src="https://imgconvert.csdnimg.cn/aHR0cDovL2ltZy5ibG9nLmNzZG4ubmV0LzIwMTYwODEzMTkyODIyODk3?x-oss-process=image/format,png" alt></p>
+<p> 查看此模块是否成功插入：lsmod</p>
+<p> <img src="https://imgconvert.csdnimg.cn/aHR0cDovL2ltZy5ibG9nLmNzZG4ubmV0LzIwMTYwODEzMTkyODU2NzAw?x-oss-process=image/format,png" alt></p>
+<p> 成功插入驱动后；插入4G模块，虚拟出6个ttyUSB，它们分别是：</p>
+<p> <img src="https://imgconvert.csdnimg.cn/aHR0cDovL2ltZy5ibG9nLmNzZG4ubmV0LzIwMTYwODEzMTkyOTMzODY3?x-oss-process=image/format,png" alt></p>
+<p> 具体的作用为：</p>
+<p> <img src="https://imgconvert.csdnimg.cn/aHR0cDovL2ltZy5ibG9nLmNzZG4ubmV0LzIwMTYwODEzMTkzMDAwMDA4?x-oss-process=image/format,png" alt></p>
+<hr>
+<h4 id="5、交叉编译PPP"><a href="#5、交叉编译PPP" class="headerlink" title="5、交叉编译PPP"></a>5、交叉编译PPP</h4><p> 这个参考: [PPP编译] (<a href="http://www.linuxidc.com/Linux/2016-03/129580.htm" target="_blank" rel="noopener">http://www.linuxidc.com/Linux/2016-03/129580.htm</a>)</p>
+<p> 我下载的是ppp-2.4.7，复制到ubuntu下，解压, 编译：</p>
+<h6 id="（1）生成Makefile文件（也可直接-configure）"><a href="#（1）生成Makefile文件（也可直接-configure）" class="headerlink" title="（1）生成Makefile文件（也可直接./configure）"></a>（1）生成Makefile文件（也可直接./configure）</h6><p><img src="https://imgconvert.csdnimg.cn/aHR0cDovL2ltZy5ibG9nLmNzZG4ubmV0LzIwMTYwODEzMTkzNDA2NzM0?x-oss-process=image/format,png" alt></p>
+<h6 id="2-编译（必须使用与开发板一致的编译器，迅为的4412用的是arm-2009q3）"><a href="#2-编译（必须使用与开发板一致的编译器，迅为的4412用的是arm-2009q3）" class="headerlink" title="(2)编译（必须使用与开发板一致的编译器，迅为的4412用的是arm-2009q3）"></a>(2)编译（必须使用与开发板一致的编译器，迅为的4412用的是arm-2009q3）</h6><p><img src="https://imgconvert.csdnimg.cn/aHR0cDovL2ltZy5ibG9nLmNzZG4ubmV0LzIwMTYwODEzMTkzNDU3MDAw?x-oss-process=image/format,png" alt></p>
+<h6 id="（3）编译命令："><a href="#（3）编译命令：" class="headerlink" title="（3）编译命令："></a>（3）编译命令：</h6><p><img src="https://imgconvert.csdnimg.cn/aHR0cDovL2ltZy5ibG9nLmNzZG4ubmV0LzIwMTYwODEzMTkzNTM1NzY3?x-oss-process=image/format,png" alt></p>
+<h6 id="4-安装：make-install-（有错，不用管）"><a href="#4-安装：make-install-（有错，不用管）" class="headerlink" title="(4)安装：make install （有错，不用管）"></a>(4)安装：make install （有错，不用管）</h6><p><img src="https://imgconvert.csdnimg.cn/aHR0cDovL2ltZy5ibG9nLmNzZG4ubmV0LzIwMTYwODEzMTkzNTU5NjA5?x-oss-process=image/format,png" alt></p>
+<h6 id="5-将编译出来的脚本复制到ARM开发板上："><a href="#5-将编译出来的脚本复制到ARM开发板上：" class="headerlink" title="(5)将编译出来的脚本复制到ARM开发板上："></a>(5)将编译出来的脚本复制到ARM开发板上：</h6><p>按照上面的make好之后，由于make install出错，所以直接在目录中找到如下的四个文件：</p>
+<p>chat  pppd  pppdump  pppstats</p>
+<p>复制到ARM开发板的/usr/sbin目录下：</p>
+<p><img src="https://imgconvert.csdnimg.cn/aHR0cDovL2ltZy5ibG9nLmNzZG4ubmV0LzIwMTYwODEzMTkzNjQxODE1?x-oss-process=image/format,png" alt></p>
+<h6 id="6-建立-etc-ppp目录："><a href="#6-建立-etc-ppp目录：" class="headerlink" title="(6)建立/etc/ppp目录："></a>(6)建立/etc/ppp目录：</h6><p>从ppp-2.4.7相应目录中拷贝文件，建立如下目录结构：<br>注：前两个文件我是从ppp-2.4.7目录下拷贝的，另外的没找到，直接到/etc/ppp目录下复制：</p>
+<p>/etc/ppp/chap-secrets<br>/etc/ppp/pap-secrets<br>/etc/ppp/ip-up<br>/etc/ppp/ip-down<br>/etc/ppp/peers/</p>
+<p>拷贝之后放到开发板的对应目录下：如下图所示</p>
+<p><img src="https://imgconvert.csdnimg.cn/aHR0cDovL2ltZy5ibG9nLmNzZG4ubmV0LzIwMTYwODEzMTkzNzIzODI5?x-oss-process=image/format,png" alt></p>
+<p>至此，ppp编译顺利完成！！！！</p>
+<hr>
+<h4 id="5-拨号脚本设置"><a href="#5-拨号脚本设置" class="headerlink" title="(5)拨号脚本设置"></a>(5)拨号脚本设置</h4><h6 id="（1）a-在-etc-ppp目录下使用-vi-gprs-connect-chat-建立文件"><a href="#（1）a-在-etc-ppp目录下使用-vi-gprs-connect-chat-建立文件" class="headerlink" title="（1）a.在/etc/ppp目录下使用 vi gprs-connect-chat 建立文件"></a>（1）a.在/etc/ppp目录下使用 vi gprs-connect-chat 建立文件</h6><p>内容如下：</p>
+<pre><code>#/etc/ppp/gprs-connect-chat
+# chat script for China Mobile, used in SIMCOM sim4100 TD module.</code></pre><p>TIMEOUT 15<br>ABORT “DELAYED”<br>ABORT “BUSY”<br>ABORT “ERROR”<br>ABORT “NO DIALTONE”<br>ABORT “NO CARRIER”<br>TIMEOUT 40<br>‘’ \rAT<br>OK ATS0=0<br>OK ATE0V1<br>OK AT+CGDCONT=1,”IP”,”CMNET”<br>OK AT+CGEQREQ=1,2,128,384,,,0,,,,,,<br>OK ATDT<em>99</em>1#<br>CONNECT<br>保存之后，退出</p>
+<h6 id="2-进入-etc-ppp-peers-目录：vi-gprsdial-建立文件"><a href="#2-进入-etc-ppp-peers-目录：vi-gprsdial-建立文件" class="headerlink" title="(2)进入/etc/ppp/peers/目录：vi gprsdial 建立文件"></a>(2)进入/etc/ppp/peers/目录：vi gprsdial 建立文件</h6><p>内容如下：</p>
+<pre><code>#/etc/ppp/peers/gprsdial
+# This is pppd script for China Mobile, used SIMCOM SIM7100 Module
+# Usage: root&gt;pppd call gprs
+#Interface which be used is the interface which connects physics interface of  SIM7100 Module.</code></pre><p>/dev/ttyUSB3<br>115200<br>crtscts<br>modem<br>    #noauth</p>
+<p>debug<br>nodetach<br>    #hide-password</p>
+<p>usepeerdns<br>noipdefault<br>defaultroute<br>user “cmnet”<br>0.0.0.0:0.0.0.0<br>    #ipcp-accept-local<br>    #ipcp-accept-remote<br>    #lcp-echo-failure 12<br>    #lcp-echo-interval 3<br>    #noccp<br>    #novj<br>    #novjccomp<br>    #persist</p>
+<p>connect ‘/usr/sbin/chat -s -v -f /etc/ppp/gprs-connect-chat’<br>    #disconnect ‘/bin/chat -v -f /etc/ppp/gprs-disconnect-chat<br>    拨号的脚本成功完成！！！</p>
+<hr>
+<h4 id="6-进行拨号"><a href="#6-进行拨号" class="headerlink" title="(6)进行拨号"></a>(6)进行拨号</h4><p>超级终端输入：pppd calll gprsdial<br>现象：出现以下说明拨号成功（未全部列出）</p>
+<p><img src="https://imgconvert.csdnimg.cn/aHR0cDovL2ltZy5ibG9nLmNzZG4ubmV0LzIwMTYwODEzMTk0NDQ2NDk4?x-oss-process=image/format,png" alt></p>
+<p>查看模块运行状态：<br>我们使用：pppd call gprsdial &amp; 将4G模块设置为后台运行，这样的话，有利于我们操作。<br>输入：ifconfig查看网络：</p>
+<p><img src="https://imgconvert.csdnimg.cn/aHR0cDovL2ltZy5ibG9nLmNzZG4ubmV0LzIwMTYwODEzMTk0NTQ0ODc5?x-oss-process=image/format,png" alt></p>
+<p>出现ppp0说明：4G模块确定拨号已经成功了。为了防止与本地的网络冲突，我将开发板上的网线拔掉！！</p>
+<hr>
+<h4 id="（7）测试"><a href="#（7）测试" class="headerlink" title="（7）测试"></a>（7）测试</h4><p>拨号之后进行测试，通过ping命令来看是否可以ping通IP和域名。</p>
+<h6 id="1-a-ping-IP"><a href="#1-a-ping-IP" class="headerlink" title="(1)a.ping IP:"></a>(1)a.ping IP:</h6><p>出现  “ping: sendto: Network is unreachable”（内心崩溃。。。。。。。。）</p>
+<p>解决方法：</p>
+<p>[ping 不通ip解决] (<a href="http://www.cnblogs.com/embedded-linux/p/5258388.html" target="_blank" rel="noopener">http://www.cnblogs.com/embedded-linux/p/5258388.html</a>)</p>
+<p>测试是否ping通baidu的IP地址。如果ping不通，需要给本机加条路由，使用如下指令：</p>
+<pre><code>#route add default gw 10.212.18.13</code></pre><p>注：10.212.18.13：运营商的ip地址，即下图黑色部分。完美解决！</p>
+<p><img src="https://imgconvert.csdnimg.cn/aHR0cDovL2ltZy5ibG9nLmNzZG4ubmV0LzIwMTYwODEzMTk0ODIwNTIy?x-oss-process=image/format,png" alt></p>
+<p>查看IP信息：</p>
+<p><img src="https://imgconvert.csdnimg.cn/aHR0cDovL2ltZy5ibG9nLmNzZG4ubmV0LzIwMTYwODEzMTk0ODUzODAx?x-oss-process=image/format,png" alt></p>
+<h6 id="2-ping-域名："><a href="#2-ping-域名：" class="headerlink" title="(2)ping 域名："></a>(2)ping 域名：</h6><p>此时可以ping通ip但是无法ping通域名。这需要设置/etc/resolv.conf来添加DNS解析服务器的地址。<br>解决：<br>在/etc/resolv.conf 中加入：下面两句，即可成功ping通域名</p>
+<p><img src="https://imgconvert.csdnimg.cn/aHR0cDovL2ltZy5ibG9nLmNzZG4ubmV0LzIwMTYwODEzMTk0OTM1MDIx?x-oss-process=image/format,png" alt></p>
+<p>DNS出现在拨号信息的末尾：</p>
+<p><img src="https://imgconvert.csdnimg.cn/aHR0cDovL2ltZy5ibG9nLmNzZG4ubmV0LzIwMTYwODEzMTk1MDEwMDIz?x-oss-process=image/format,png" alt></p>
+<p>成功ping通百度</p>
+<p><img src="https://imgconvert.csdnimg.cn/aHR0cDovL2ltZy5ibG9nLmNzZG4ubmV0LzIwMTYwODEzMTk1MzA5NDMy?x-oss-process=image/format,png" alt></p>
+<p>至此，4G模块已经成功拨号。。。。。。。。。。。。。。。。。<br>若要开机自启动拨号：只需设置/etc/init.d/rcS 即可（参照网卡设置）</p>
+<hr>
+<h2 id="四、感悟"><a href="#四、感悟" class="headerlink" title="四、感悟"></a>四、感悟</h2><p>本人是新手，在移植的过程中遇到了很多的问题，多半是看了网上的文章，然后边学习边弄。如果有不准确的地方，还望大家勿喷，互相学习。从开始学习Linux驱动到现在，也有一段时间了，虽然还很菜，但至少不像开始一样蒙圈了。</p>
+<hr>
+<h2 id="五、感谢"><a href="#五、感谢" class="headerlink" title="五、感谢"></a>五、感谢</h2><p>在这个过程中，我主要参考了[在ARM Linux上实现4G模块PPP拨号上网] (<a href="http://www.linuxidc.com/Linux/2016-03/129581.htm)他的文章，还有一些相关3G模块的移植文章，再次感谢大家！！" target="_blank" rel="noopener">http://www.linuxidc.com/Linux/2016-03/129581.htm)他的文章，还有一些相关3G模块的移植文章，再次感谢大家！！</a></p>
+<hr>
+<h1 id="欢迎关注公众号：【千艺千寻】，共同成长"><a href="#欢迎关注公众号：【千艺千寻】，共同成长" class="headerlink" title="欢迎关注公众号：【千艺千寻】，共同成长"></a><strong>欢迎关注公众号：【千艺千寻】，共同成长</strong></h1><p><img src="/images/%E6%9C%AB%E6%A0%8F.png" alt></p>
 
             </div>
             <hr />
@@ -1101,9 +798,9 @@ struct USB_QUALIFIER_DESCRIPTOR
             <br/>
             <span xmlns:dct="http://purl.org/dc/terms/" href="http://purl.org/dc/dcmitype/Text"
                   property="dct:title" rel="dct:type">
-                    《USB总线专题（四）——枚举过程》
+                    《基于迅为itop4412开发板的4G模块SIM7100的拨号上网的实现》
                 </span> 由
-            <a xmlns:cc="http://creativecommons.org/ns#" href="/2019/09/11/usb-zong-xian-zhuan-ti-san-miao-shu-fu/" property="cc:attributionName"
+            <a xmlns:cc="http://creativecommons.org/ns#" href="/2016/08/13/ji-yu-xun-wei-itop4412-kai-fa-ban-de-4g-mo-kuai-sim7100-de-bo-hao-shang-wang-de-shi-xian/" property="cc:attributionName"
                rel="cc:attributionURL">
                 霁风
             </a> 采用
@@ -1144,7 +841,7 @@ struct USB_QUALIFIER_DESCRIPTOR
         repo: 'lovewinds13.github.io',
         owner: 'lovewinds13',
         admin: "lovewinds13",
-        id: '2019/09/11/usb-zong-xian-zhuan-ti-san-miao-shu-fu/',
+        id: '2016/08/13/ji-yu-xun-wei-itop4412-kai-fa-ban-de-4g-mo-kuai-sim7100-de-bo-hao-shang-wang-de-shi-xian/',
         distractionFreeMode: false  // Facebook-like distraction free mode
     });
 
@@ -1431,32 +1128,32 @@ struct USB_QUALIFIER_DESCRIPTOR
             <div class="article-badge left-badge text-color">
                 <i class="fa fa-chevron-left"></i>&nbsp;上一篇</div>
             <div class="card">
-                <a href="/2020/01/14/keil-shi-yong-zong-jie-yi-kao-bei-diao-shi-zhong-nei-cun-shu-ju-dao-wen-ben-wen-jian/">
+                <a href="/2019/08/11/stm32-xue-xi-bi-ji-yi-yi-hex-wen-jian-he-bin-wen-jian-ge-shi/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/3.jpg" class="responsive-img" alt="Keil使用总结（一）——拷贝调试中内存数据到文本文件">
+                        <img src="/medias/featureimages/0.jpg" class="responsive-img" alt="STM32学习笔记一一HEX文件和BIN文件格式">
                         
-                        <span class="card-title">Keil使用总结（一）——拷贝调试中内存数据到文本文件</span>
+                        <span class="card-title">STM32学习笔记一一HEX文件和BIN文件格式</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            1. 简介我们在调试过程中，不免需要查看从一些设备（比如：传感器，采集器等设备）读取的数据，在使用 Keil 调试的时候，就可以从 Memory 窗口将数据保存到计算机本地，对应进行分析。
-2. 步骤2.1 打开 Command  窗口在调
+                            1. 引言今天看串口的 IAP ，平时我们通过 JTAG 等工具下载的都是 HEX 文件，都没有思考一下 HEX 的文件组成。而串口 IAP 下载的是 BIN 文件，刚好在这里区分学习一下。
+我们平时烧写 HEX 文件是不需要设置地址信息的
                         
                     </div>
                     <div class="publish-info">
                         <span class="publish-date">
-                            <i class="fa fa-clock-o fa-fw icon-date"></i>2020-01-14
+                            <i class="fa fa-clock-o fa-fw icon-date"></i>2019-08-11
                         </span>
                         <span class="publish-author">
                             
                             <i class="fa fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/Keil/" class="post-category" target="_blank">
-                                    Keil
+                            <a href="/categories/STM32/" class="post-category" target="_blank">
+                                    STM32
                                 </a>
                             
                             
@@ -1466,12 +1163,20 @@ struct USB_QUALIFIER_DESCRIPTOR
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/Tools/" target="_blank">
-                        <span class="chip bg-color">Tools</span>
+                    <a href="/tags/HEX/" target="_blank">
+                        <span class="chip bg-color">HEX</span>
                     </a>
                     
-                    <a href="/tags/Keil/" target="_blank">
-                        <span class="chip bg-color">Keil</span>
+                    <a href="/tags/BIN/" target="_blank">
+                        <span class="chip bg-color">BIN</span>
+                    </a>
+                    
+                    <a href="/tags/Debug/" target="_blank">
+                        <span class="chip bg-color">Debug</span>
+                    </a>
+                    
+                    <a href="/tags/通信协议/" target="_blank">
+                        <span class="chip bg-color">通信协议</span>
                     </a>
                     
                 </div>
@@ -1482,55 +1187,55 @@ struct USB_QUALIFIER_DESCRIPTOR
         
         <div class="article col s12 m6" data-aos="fade-up">
             <div class="article-badge right-badge text-color">
-                下一篇&nbsp;<i class="fa fa-chevron-right"></i>
+                本篇&nbsp;<i class="fa fa-dot-circle-o"></i>
             </div>
             <div class="card">
-                <a href="/2019/09/06/usb-zong-xian-zhuan-ti-si-mei-ju-guo-cheng/">
+                <a href="/2016/08/13/ji-yu-xun-wei-itop4412-kai-fa-ban-de-4g-mo-kuai-sim7100-de-bo-hao-shang-wang-de-shi-xian/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/12.jpg" class="responsive-img" alt="USB总线专题（四）——枚举过程">
+                        <img src="/medias/featureimages/16.jpg" class="responsive-img" alt="基于迅为itop4412开发板的4G模块SIM7100的拨号上网的实现">
                         
-                        <span class="card-title">USB总线专题（四）——枚举过程</span>
+                        <span class="card-title">基于迅为itop4412开发板的4G模块SIM7100的拨号上网的实现</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            
-1. 定义 枚举就是从设备读取一些信息，知道设备是什么样的设备，如何进行通信，这样主机就可以根据这些信息来加载合适的驱动程序。枚举过程包括设备地址的分配，从设备读取设备描述符，分配加载驱动程序，选择规定的设备功耗要求和接口配置信息。
-US
+                            一、实验目的：    实现4G模块sim7100在Linux系统上的拨号上网。
+二、实验平台：开发板：迅为4412精英版；4G模块：SIM7100开发板。SIM7100C带有USB口和串口，考虑速率等问题，采用USB接口与开发板相连接。我的
                         
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="fa fa-clock-o fa-fw icon-date"></i>2019-09-06
+                                <i class="fa fa-clock-o fa-fw icon-date"></i>2016-08-13
                             </span>
                         <span class="publish-author">
                             
                             <i class="fa fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/USB-通信/" class="post-category" target="_blank">
-                                    USB 通信
+                            <a href="/categories/Linux/" class="post-category" target="_blank">
+                                    Linux
                                 </a>
                             
                             
                         </span>
                     </div>
                 </div>
+
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/通信协议/" target="_blank">
-                        <span class="chip bg-color">通信协议</span>
+                    <a href="/tags/Linux/" target="_blank">
+                        <span class="chip bg-color">Linux</span>
                     </a>
                     
-                    <a href="/tags/USB/" target="_blank">
-                        <span class="chip bg-color">USB</span>
+                    <a href="/tags/SIM7100/" target="_blank">
+                        <span class="chip bg-color">SIM7100</span>
                     </a>
                     
-                    <a href="/tags/Mass-Storage/" target="_blank">
-                        <span class="chip bg-color">Mass Storage</span>
+                    <a href="/tags/itop4412/" target="_blank">
+                        <span class="chip bg-color">itop4412</span>
                     </a>
                     
                 </div>
