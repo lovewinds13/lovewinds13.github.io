@@ -190,11 +190,11 @@
       
         <tags>
             
+            <tag> 通信协议 </tag>
+            
             <tag> USB </tag>
             
             <tag> Mass Storage </tag>
-            
-            <tag> 通信协议 </tag>
             
         </tags>
       
@@ -246,11 +246,11 @@
       
         <tags>
             
+            <tag> 通信协议 </tag>
+            
             <tag> USB </tag>
             
             <tag> Mass Storage </tag>
-            
-            <tag> 通信协议 </tag>
             
         </tags>
       
@@ -275,11 +275,11 @@
       
         <tags>
             
+            <tag> 通信协议 </tag>
+            
             <tag> USB </tag>
             
             <tag> Mass Storage </tag>
-            
-            <tag> 通信协议 </tag>
             
         </tags>
       
@@ -304,13 +304,13 @@
       
         <tags>
             
-            <tag> 通信协议 </tag>
-            
             <tag> HEX </tag>
             
             <tag> BIN </tag>
             
             <tag> Debug </tag>
+            
+            <tag> 通信协议 </tag>
             
         </tags>
       
